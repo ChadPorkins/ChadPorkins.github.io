@@ -1,0 +1,86 @@
+/* Set a base font and line height */
+body {
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+/* Improve heading styles */
+h1, h2, h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+/* Enhance paragraph readability */
+p {
+  margin-bottom: 15px;
+}
+
+/* Style links */
+a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Create blockquote style */
+blockquote {
+  border-left: 2px solid #007BFF;
+  padding-left: 15px;
+  margin: 15px 0;
+  font-style: italic;
+}
+
+/* Highlight code or preformatted text */
+pre {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+}
+
+/* Highlight inline code */
+code {
+  background-color: #f4f4f4;
+  padding: 2px 5px;
+  border: 1px solid #ddd;
+  font-family: "Courier New", monospace;
+}
+
+/* Style lists */
+ul, ol {
+  margin-left: 20px;
+}
+
+/* Increase emphasis on strong text */
+strong {
+  font-weight: bold;
+}
+
+/* Italicize emphasized text */
+em {
+  font-style: italic;
+}

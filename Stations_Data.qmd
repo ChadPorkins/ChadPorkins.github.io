@@ -1,0 +1,71 @@
+---
+title: "Weather stations data"
+---
+
+In this seminar, to get weather data, I first classified and filtered relevant weather stations in terms of data. To do this, I used two databases from GHCNd.
+
+The Global Historical Climatology Network Daily (GHCNd) is an online database of daily climate summaries from land surface monitoring stations worldwide. The database contains records from over 100,000 stations in 180 countries and territories, containing temperature, precipitation, snowfall, and snow depth data. (National Centers for Environmental Information. (n.d.))
+
+I have downloaded two databases containing the following data:
+
+1.  **Stations**: Station ID, latitude, longitude, elevation, State (if applicable), and Station name.
+
+2.  **Inventory**: Station ID, latitude, longitude, element type, and begin/end date.
+
+After downloading the databases from the GHCNd website, the data needed to be converted from text to CSV format. In addition, the relevant columns from each database were selected.
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+
+data_stations <- read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-stations.txt", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)
+
+station_data <- data_stations %>%
+  select(V1, V2, V3) %>%
+  setNames(c("Station_ID", "Latitude", "Longitude")) %>%
+  as.data.frame()
+
+station_data %>%
+  write.csv("station_data.csv", row.names = FALSE)
+
+```
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+
+data_inventory <- read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-inventory.txt", stringsAsFactors = FALSE)
+
+inventory_data <- data_inventory %>%
+  select(V1, V2, V3, V4, V5, V6) %>%
+  setNames(c("Station_ID", "Latitude", "Longitude", "Data_Type", "Start_Year", "End_Year")) %>%
+  as.data.frame()
+
+inventory_data %>%
+  write.csv("Inventory_data.csv", row.names = FALSE)
+
+```
+
+These two databases were used to classify and filter weather stations with temperature-averaged data. Also, it was necessary to classify and filter stations that collected data from the summers of 2013 to 2022; the same stations also had to exist in 2013 when the Landsat 8 satellite was flown into space.
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+
+inventory_data <- read.csv("Inventory_Data.csv", stringsAsFactors = FALSE)
+station_data <- read.csv("station_data.csv", stringsAsFactors = FALSE)
+
+stations_with_data_in_2023 <- inventory_data %>%
+  filter(Data_Type == "TAVG") %>%
+  inner_join(station_data, by = "Station_ID") %>%
+  mutate(Start_Year = as.numeric(Start_Year), End_Year = as.numeric(End_Year)) %>%
+  filter(End_Year >= 2023, Start_Year < 2013)
+
+stations_with_data_in_2023 %>%
+write.csv("stations_with_data_in_2023.csv", row.names = FALSE)
+
+```
+
+Here is the data frame containing all the necessary data for this seminar.
+
+```{r,warning=FALSE,message=FALSE}
+stations_with_data_in_2023 = read.csv("stations_with_data_in_2023.csv")
+glimpse(stations_with_data_in_2023)
+```

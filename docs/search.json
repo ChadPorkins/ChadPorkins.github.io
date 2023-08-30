@@ -1,0 +1,121 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "GIT Seminar",
+    "section": "",
+    "text": "Jacob Alderson’s seminar work In Geographic Information Technologies, In the Department of Environmental, Geoinformatic and Urban Planning Sciences in Ben Gurion University of the Negev."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "GIT Seminar",
+    "section": "Education",
+    "text": "Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul MA B.A in Economics | Sept 2007 - June 2011"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "GIT Seminar",
+    "section": "Experience",
+    "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Sept 2012 - April 2018"
+  },
+  {
+    "objectID": "index.html#title",
+    "href": "index.html#title",
+    "title": "GIT Seminar",
+    "section": "Title",
+    "text": "Title\n“SpatioTemporal Analysis of Summer Land Surface Temperature in New York City’s Synthetic Turf Fields (2013-2022): Integrating Landsat 8 and Weather Station Data, Empowered by Machine Learning Techniques”\nSubtitle (if applicable)"
+  },
+  {
+    "objectID": "index.html#author",
+    "href": "index.html#author",
+    "title": "GIT Seminar",
+    "section": "Author",
+    "text": "Author\nJacob Alderson’s seminar Work In Geographic Information Technologies.\nMaster of Arts (or Science) in Your Program\nYour University Name"
+  },
+  {
+    "objectID": "index.html#date",
+    "href": "index.html#date",
+    "title": "GIT Seminar",
+    "section": "Date",
+    "text": "Date\nMonth Year"
+  },
+  {
+    "objectID": "index.html#supervised-by",
+    "href": "index.html#supervised-by",
+    "title": "GIT Seminar",
+    "section": "Supervised by",
+    "text": "Supervised by\nProfessor Itai Kloog.\nHead of the Geoinformatics Department at Ben Gurion University of the Negev."
+  },
+  {
+    "objectID": "index.html#word-count",
+    "href": "index.html#word-count",
+    "title": "GIT Seminar",
+    "section": "Word Count",
+    "text": "Word Count\nXXXX (optional)"
+  },
+  {
+    "objectID": "index.html#acknowledgments-optional",
+    "href": "index.html#acknowledgments-optional",
+    "title": "GIT Seminar",
+    "section": "Acknowledgments (optional)",
+    "text": "Acknowledgments (optional)\nYou can include your acknowledgments here."
+  },
+  {
+    "objectID": "index.html#git-seminar",
+    "href": "index.html#git-seminar",
+    "title": "GIT Seminar",
+    "section": "GIT Seminar",
+    "text": "GIT Seminar\nJacob Alderson’s seminar Work In Geographic Information Technologies, In the Department of Environmental Sciences, Geoinformatics and Urban Planning in Ben Gurion University of the Negev."
+  },
+  {
+    "objectID": "index.html#spatiotemporal-analysis-of-summer-land-surface-temperature-in-new-york-citys-synthetic-turf-fields-2013-2022-integrating-landsat-8-and-weather-station-data-empowered-by-machine-learning-techniques.-1",
+    "href": "index.html#spatiotemporal-analysis-of-summer-land-surface-temperature-in-new-york-citys-synthetic-turf-fields-2013-2022-integrating-landsat-8-and-weather-station-data-empowered-by-machine-learning-techniques.-1",
+    "title": "GIT Seminar",
+    "section": "SpatioTemporal Analysis of Summer Land Surface Temperature in New York City’s Synthetic Turf Fields (2013-2022): Integrating Landsat 8 and Weather Station Data, Empowered by Machine Learning Techniques.",
+    "text": "SpatioTemporal Analysis of Summer Land Surface Temperature in New York City’s Synthetic Turf Fields (2013-2022): Integrating Landsat 8 and Weather Station Data, Empowered by Machine Learning Techniques."
+  },
+  {
+    "objectID": "index.html#acknowledgments",
+    "href": "index.html#acknowledgments",
+    "title": "GIT Seminar",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nI thank Professor Itai Kloog and ScD, MSc, Homero Harari from the Icahn School of Medicine at Mount Sinai, who gave me the privilege and the honor to work with them this year in academic research and guided me in my first steps in the academic world."
+  },
+  {
+    "objectID": "Introduction.html",
+    "href": "Introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "Turf_Fields_Data.html",
+    "href": "Turf_Fields_Data.html",
+    "title": "Turf Fields Data",
+    "section": "",
+    "text": "# Load data for New York Turf Fields 1\nnyc1 <- read.csv(\"New York Turf Fields 1.csv\")\n\n# Display the first few rows of the dataset\nhead(nyc1)\n\n                   Location ID\n1           Bronx Park East  1\n2               Haffen Park  2\n3 John Mullaly Park (North)  3\n4 John Mullaly Park (South)  4\n5          Marble Hill Park  5\n6           Pelham Bay Park  6\n\n\nUsing Google Earth, I added longitude and latitude coordinates to each artificial turf grass field, as seen in the following table.\n\n# Load data for New York Turf Fields 2\nnyc2 <- read.csv(\"New York Turf Fields 2.csv\")\n\n# Display the first few rows of the dataset\nhead(nyc2)\n\n                   Location Latitude Longitude ID\n1           Bronx Park East 40.85862 -73.87169  1\n2               Haffen Park 40.87307 -73.83959  2\n3 John Mullaly Park (North) 40.83388 -73.92410  3\n4 John Mullaly Park (South) 40.83326 -73.92445  4\n5          Marble Hill Park 40.87735 -73.90828  5\n6           Pelham Bay Park 40.87006 -73.79119  6\n\n\nTo visualize the data, I created a map of the different artificial turf grass fields around New York.\n\nlibrary(leaflet)\nlibrary(dplyr)\n\n# Create a leaflet map\nleaflet(data = nyc2) %>%\n  addTiles() %>%\n  addMarkers(\n    ~Longitude, ~Latitude,\n    popup = ~paste(\"Location: \", Location, \"<br>ID: \", ID)\n  )"
+  },
+  {
+    "objectID": "Bibliography.html",
+    "href": "Bibliography.html",
+    "title": "",
+    "section": "",
+    "text": "New York City Department of Parks & Recreation. (n.d.). Synthetic Turf Lead Results. Wayback Machine. web.archive.org/web/20180203033627/https://www.nycgovparks.org/news/reports/synthetic-turf-tests\nNational Centers for Environmental Information. (n.d.). Global historical climatology network daily (GHCNd). https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily"
+  },
+  {
+    "objectID": "Stations_Data.html",
+    "href": "Stations_Data.html",
+    "title": "Stations_Data",
+    "section": "",
+    "text": "The Global Historical Climatology Network Daily (GHCNd) is an online database of daily climate summaries from land surface monitoring stations worldwide. The database contains records from over 100,000 stations in 180 countries and territories, containing temperature, precipitation, snowfall, and snow depth data. (National Centers for Environmental Information. (n.d.))\nI have downloaded two databases containing the following data:\n\nStations: Station ID, latitude, longitude, elevation, State (if applicable), and Station name.\nInventory: Station ID, latitude, longitude, element type, and begin/end date.\n\nAfter downloading the databases from the GHCNd website, the data needed to be converted from text to CSV format. In addition, the relevant columns from each database were selected.\n\nlibrary(dplyr)\n\ndata_stations <- read.table(\"ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-stations.txt\", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)\n\nstation_data <- data_stations %>%\n  select(V1, V2, V3) %>%\n  setNames(c(\"Station_ID\", \"Latitude\", \"Longitude\")) %>%\n  as.data.frame()\n\nstation_data %>%\n  write.csv(\"station_data.csv\", row.names = FALSE)\n\n\nlibrary(dplyr)\n\ndata_inventory <- read.table(\"ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-inventory.txt\", stringsAsFactors = FALSE)\n\ninventory_data <- data_inventory %>%\n  select(V1, V2, V3, V4, V5, V6) %>%\n  setNames(c(\"Station_ID\", \"Latitude\", \"Longitude\", \"Data_Type\", \"Start_Year\", \"End_Year\")) %>%\n  as.data.frame()\n\ninventory_data %>%\n  write.csv(\"Inventory_data.csv\", row.names = FALSE)\n\nThese two databases were used to classify and filter weather stations with temperature-averaged data. Also, it was necessary to classify and filter stations that collected data from the summers of 2013 to 2022; the same stations also had to exist in 2013 when the Landsat 8 satellite was flown into space.\n\nlibrary(dplyr)\n\ninventory_data <- read.csv(\"Inventory_Data.csv\", stringsAsFactors = FALSE)\nstation_data <- read.csv(\"station_data.csv\", stringsAsFactors = FALSE)\n\nstations_with_data_in_2023 <- inventory_data %>%\n  filter(Data_Type == \"TAVG\") %>%\n  inner_join(station_data, by = \"Station_ID\") %>%\n  mutate(Start_Year = as.numeric(Start_Year), End_Year = as.numeric(End_Year)) %>%\n  filter(End_Year >= 2023, Start_Year < 2013)\n\nstations_with_data_in_2023 %>%\nwrite.csv(\"stations_with_data_in_2023.csv\", row.names = FALSE)\n\nHere is the data frame containing all the necessary data for this seminar.\n\nstations_with_data_in_2023 = read.csv(\"stations_with_data_in_2023.csv\")\nglimpse(stations_with_data_in_2023)\n\nRows: 4,425\nColumns: 8\n$ Station_ID  <chr> \"AE000041196\", \"AEM00041194\", \"AEM00041217\", \"AEM00041218\"…\n$ Latitude.x  <dbl> 25.3330, 25.2550, 24.4330, 24.2620, 36.7167, 30.5667, 28.0…\n$ Longitude.x <dbl> 55.5170, 55.3640, 54.6510, 55.6090, 3.2500, 2.8667, 9.6331…\n$ Data_Type   <chr> \"TAVG\", \"TAVG\", \"TAVG\", \"TAVG\", \"TAVG\", \"TAVG\", \"TAVG\", \"T…\n$ Start_Year  <int> 1944, 1983, 1983, 1994, 1943, 1957, 1965, 1995, 1995, 1943…\n$ End_Year    <int> 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023…\n$ Latitude.y  <dbl> 25.3330, 25.2550, 24.4330, 24.2620, 36.7167, 30.5667, 28.0…\n$ Longitude.y <dbl> 55.5170, 55.3640, 54.6510, 55.6090, 3.2500, 2.8667, 9.6331…"
+  }
+]

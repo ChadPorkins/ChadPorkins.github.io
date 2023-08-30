@@ -1,0 +1,5 @@
+data sources:
+
+New York City Department of Parks & Recreation. (n.d.). *Synthetic Turf Lead Results*. Wayback Machine. web.archive.org/web/20180203033627/https://www.nycgovparks.org/news/reports/synthetic-turf-tests
+
+National Centers for Environmental Information. (n.d.). *Global historical climatology network daily (GHCNd)*. https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily

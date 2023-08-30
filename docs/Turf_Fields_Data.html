@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Turf Fields Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.1.2/leaflet.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Turf Fields Data</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Main Page</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">GIT Seminar</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Data Sources and Collection</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Turf_Fields_Data.html" class="sidebar-item-text sidebar-link active">Turf Fields Data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Stations_Data.html" class="sidebar-item-text sidebar-link">Stations_Data</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Turf Fields Data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>The data presented in this chapter is sourced from a publication by the New York City Department of Parks &amp; Recreation. The publication indicates that the majority of synthetic turf fields in NYC utilize crumb rubber infill made from repurposed car and truck tires. Additionally, a table is provided showcasing various athletic fields in New York that feature artificial turf grass. (New York City Department of Parks &amp; Recreation. (n.d.))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data for New York Turf Fields 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nyc1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"New York Turf Fields 1.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyc1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Location ID
+1           Bronx Park East  1
+2               Haffen Park  2
+3 John Mullaly Park (North)  3
+4 John Mullaly Park (South)  4
+5          Marble Hill Park  5
+6           Pelham Bay Park  6</code></pre>
+</div>
+</div>
+<p>Using Google Earth, I added longitude and latitude coordinates to each artificial turf grass field, as seen in the following table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data for New York Turf Fields 2</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>nyc2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"New York Turf Fields 2.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Location Latitude Longitude ID
+1           Bronx Park East 40.85862 -73.87169  1
+2               Haffen Park 40.87307 -73.83959  2
+3 John Mullaly Park (North) 40.83388 -73.92410  3
+4 John Mullaly Park (South) 40.83326 -73.92445  4
+5          Marble Hill Park 40.87735 -73.90828  5
+6           Pelham Bay Park 40.87006 -73.79119  6</code></pre>
+</div>
+</div>
+<p>To visualize the data, I created a map of the different artificial turf grass fields around New York.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a leaflet map</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(<span class="at">data =</span> nyc2) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>Longitude, <span class="sc">~</span>Latitude,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">paste</span>(<span class="st">"Location: "</span>, Location, <span class="st">"&lt;br&gt;ID: "</span>, ID)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5a8218f978f059df29a4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5a8218f978f059df29a4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[40.8586188,40.8730741,40.8338766,40.8332606,40.8773525,40.8700567,40.8216213,40.8856566,40.8111858,40.8444439,40.8776371,40.6564704,40.6951669,40.6976686,40.6976595,40.5741836,40.6126882,40.6121875,40.6113725,40.6266311,40.662506,40.5793905,40.6592383,40.7200357,40.6964696,40.6521462,40.6496372,40.6500339,40.6504178,40.650705,40.6510392,40.670924,40.6341429,40.7065263,40.6907445,40.583251,40.7104199,40.8182459,40.7175718,40.8008828,40.8570419,40.8575315,40.7153103,40.711994,40.7124987,40.7189721,40.719804,40.7217324,40.8024313,40.7973652,40.8059462,40.7298224,40.7942389,40.7837929,40.7824365,40.7818426,40.7821656,40.7828689,40.7839852,40.7845498,40.7854744,40.7847757,40.7858394,40.7863476,40.8001116,40.8014623,40.8039219,40.7184585,40.7217834,40.7940351,40.7997961,40.7505195,40.7498544,40.6610053,40.7486311,40.7473575,40.7497156,40.7492553,40.7465091,40.7018835,40.7018835,40.701364,40.7560392,40.6549455,40.719892,40.7457051,40.7027322,40.7484742,40.7077796,40.771861,40.7183828,40.688243,40.6656751,40.759263,40.5926851,40.5337911,40.5342141,40.575565],[-73.8716893,-73.8395939,-73.9241049,-73.924454,-73.9082846,-73.7911901,-73.916145,-73.9157858,-73.9108928,-73.9195091,-73.8773577,-73.902085,-73.9180307,-73.9170396,-73.9906515,-73.9837243,-74.0143937,-74.0148678,-74.0155603,-74.0373541,-73.9412648,-73.9966496,-73.8874742,-73.9512544,-73.9854296,-73.9670914,-73.9695991,-73.9686266,-73.9676554,-73.9669191,-73.9660731,-74.0025432,-74.038126,-73.9472551,-73.9993437,-73.9646893,-73.9975553,-73.9521779,-73.9766762,-73.9636687,-73.9256815,-73.9243313,-74.0001056,-73.9772131,-73.9769214,-73.9739882,-73.9736965,-73.9733863,-73.9415909,-73.9673428,-73.9337363,-74.0064167,-73.9243363,-73.9283359,-73.9289155,-73.9282785,-73.9272845,-73.9280632,-73.9340291,-73.9346431,-73.9341897,-73.9334432,-73.9311479,-73.9308053,-73.9739129,-73.9729141,-73.9713487,-73.9932312,-73.9915309,-73.9358098,-73.9348608,-73.8338406,-73.8337053,-73.7456896,-73.8408422,-73.8400339,-73.8398083,-73.8365862,-73.8416113,-73.8541889,-73.8541889,-73.8525247,-73.8549347,-73.7540185,-73.8842651,-73.8169935,-73.7843169,-73.8619557,-73.8909685,-73.7794171,-73.901696,-73.7733251,-73.8270879,-73.900273,-74.1384622,-74.2088538,-74.210295,-74.081959],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Location:  Bronx Park East <br>ID:  1","Location:  Haffen Park <br>ID:  2","Location:  John Mullaly Park (North) <br>ID:  3","Location:  John Mullaly Park (South) <br>ID:  4","Location:  Marble Hill Park <br>ID:  5","Location:  Pelham Bay Park <br>ID:  6","Location:  PS29 Melrose School <br>ID:  7","Location:  Seton Park Ballfield <br>ID:  8","Location:  St. Mary’s Park <br>ID:  9","Location:  West Bronx Recreation Center (Highbridge) <br>ID:  10","Location:  Williamsbridge Oval <br>ID:  11","Location:  Brownsville <br>ID:  12","Location:  Bushwick Ballfield <br>ID:  13","Location:  Bushwick Ballfield (2) <br>ID:  14","Location:  Cadman Plaza <br>ID:  15","Location:  Coney Island Steeplechase Ballfield <br>ID:  16","Location:  Dyker Beach Park 1 (LL) <br>ID:  17","Location:  Dyker Beach Park 2 (LL) <br>ID:  18","Location:  Dyker Beach Park 2 (Soccer) <br>ID:  19","Location:  Ft. Hamilton HS Athletic Field <br>ID:  20","Location:  Hamilton-Metz Park <br>ID:  21","Location:  Kaiser Park <br>ID:  22","Location:  Linden (Gershwin) Park <br>ID:  23","Location:  McCarren Park <br>ID:  24","Location:  Mclaughlin Park <br>ID:  25","Location:  Parade Ground Field 4 <br>ID:  26","Location:  Parade Ground Field 7 <br>ID:  27","Location:  Parade Ground Field 8  <br>ID:  28","Location:  Parade Ground Field 9 <br>ID:  29","Location:  Parade Ground 10 <br>ID:  30","Location:  Parade Ground 11 <br>ID:  31","Location:  Red Hook Recreation Area <br>ID:  32","Location:  Shore Road Park <br>ID:  33","Location:  Stemberg Park Fields 1 and 2 <br>ID:  34","Location:  Van Voorhees Park <br>ID:  35","Location:  William Grady HS (DOE) <br>ID:  36","Location:  Al Smith <br>ID:  37","Location:  Annunciation Park <br>ID:  38","Location:  Baruch Park <br>ID:  39","Location:  Booker T. Washington <br>ID:  40","Location:  Buczek Ballfield <br>ID:  41","Location:  Buczek Ballfield (2) <br>ID:  42","Location:  Columbus Park <br>ID:  43","Location:  East River Park Field 1 <br>ID:  44","Location:  East River Park Field 2 <br>ID:  45","Location:  East River Park Field 5 <br>ID:  46","Location:  East River Park Field 6 <br>ID:  47","Location:  East River Park Soccer Field <br>ID:  48","Location:  Eugene McCabe Field <br>ID:  49","Location:  Frederick Douglass Plgd <br>ID:  50","Location:  Harlem River Park Fields 1 and 2 (128th St.) <br>ID:  51","Location:  J.J. Walker Park <br>ID:  52","Location:  Randalls Island 10 (Icahn Stadium) <br>ID:  53","Location:  Randalls Island 70 <br>ID:  54","Location:  Randalls Island 72 <br>ID:  55","Location:  Randalls Island 73 <br>ID:  56","Location:  Randalls Island 74 <br>ID:  57","Location:  Randalls Island 75 <br>ID:  58","Location:  Randalls Island 82 <br>ID:  59","Location:  Randalls Island 83 <br>ID:  60","Location:  Randalls Island 84 <br>ID:  61","Location:  Randalls Island 85 <br>ID:  62","Location:  Randalls Island 90 <br>ID:  63","Location:  Randalls Island 91 <br>ID:  64","Location:  Riverside Park @ 101st <br>ID:  65","Location:  Riverside Park @ 104th <br>ID:  66","Location:  Riverside Park @ 107th <br>ID:  67","Location:  Sara D. Roosevelt Park (At Broome and Grand Station) <br>ID:  68","Location:  Sara D. Roosevelt Park (At Rivington and Stanton) <br>ID:  69","Location:  Thomas Jefferson Park <br>ID:  70","Location:  Wagner Playground <br>ID:  71","Location:  Al Oerter (FMCP 8) <br>ID:  72","Location:  Al Oerter (FMCP 9) <br>ID:  73","Location:  Brookville Park <br>ID:  74","Location:  Flushing Meadow Corona Park 1 <br>ID:  75","Location:  Flushing Meadow Corona Park 2 <br>ID:  76","Location:  Flushing Meadow Corona Park 3 <br>ID:  77","Location:  Flushing Meadow Corona Park 5 <br>ID:  78","Location:  Flushing Meadow Corona Park 7 <br>ID:  79","Location:  Forest Park (Victory Field) 1 <br>ID:  80","Location:  Forest Park Field 1, 4, 5 <br>ID:  81","Location:  Forest Park Field 1, 4, 5 (2) <br>ID:  82","Location:  Hinton Park Fields 1 and 2 <br>ID:  83","Location:  Idlewild Park 01 <br>ID:  84","Location:  Juniper Valley Park (Brennan) 01 <br>ID:  85","Location:  Kissena Corridor 01 <br>ID:  86","Location:  Liberty Park (Detective Keith Williams) 01, 1 <br>ID:  87","Location:  Linden Park (Queens) <br>ID:  88","Location:  Mafera Park 01, 1, 3 <br>ID:  89","Location:  Raymond O’Connor Park 01 <br>ID:  90","Location:  Reiff Park 1 <br>ID:  91","Location:  Roy Wilkins Park 01 <br>ID:  92","Location:  Southern Fields 01 <br>ID:  93","Location:  St. Michael’s Fields 01, 1 <br>ID:  94","Location:  Blood Root Valley (Greenbelt) <br>ID:  95","Location:  Bloomingdale Park <br>ID:  96","Location:  Bloomingdale Park (2) <br>ID:  97","Location:  Midland Beach <br>ID:  98"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[40.5337911,40.8856566],"lng":[-74.210295,-73.7456896]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
