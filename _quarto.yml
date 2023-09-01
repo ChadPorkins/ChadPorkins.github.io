@@ -15,6 +15,7 @@ website:
           - Turf_Fields_Data.qmd
           - Landsat8.qmd
           - Stations_Data.qmd
+          - Stations_Data_Spatial_Join.qmd
       - section: "Data Cleaning and Preprocessing"
       - section: "Data Integration and Joins"
       - section: "Data Integration and Joins"

@@ -188,6 +188,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Stations_Data.html" class="sidebar-item-text sidebar-link">Weather stations data</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link">Weather stations Spatial Join</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -228,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To retrieve Land Surface Temperature data, I utilized Google Earth Engine, a web application that allowed me to write code based on physical remote sensing principles. I specifically used band 10, which is the thermal band on the Landsat 8 satellite, to extract LST values from the satellite’s data.</p>
+<p>To retrieve Land Surface Temperature data, I utilized Google Earth Engine, a web application that allowed me to write code based on physical remote sensing principles. I specifically used band 10, which is the thermal band on the Landsat 8 satellite, to extract LST values from the satellite’s data. (USGS, (n.d.))</p>
 <p>To make the code function properly, I utilized a polygon layer named NEMIA that encompasses the eastern coast of North America. Additionally, I transformed the table of synthetic fields with corresponding coordinates into a point layer using ARC GIS PRO.</p>
 <p>First, the code adds the layers representing NEMIA (in red) and Fields (in green) to the map. Then, it centers the view on NEMIA, and retrieves Landsat 8 imagery for June 2018 within NEMIA. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al.&nbsp;(2019) in their research.</p>
 <p>Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.</p>
