@@ -35,4 +35,8 @@ summer_data <- final_data %>%
 glimpse(summer_data)
 ```
 
+```{r,echo=FALSE}
+write.csv(summer_data, "summer_data.csv")
+
+```
 

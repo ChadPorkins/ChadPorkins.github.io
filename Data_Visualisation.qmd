@@ -1,0 +1,78 @@
+---
+title: "Data Visualization"
+---
+
+
+```{r,echo=FALSE}
+summer_data = read.csv("summer_data.csv")
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+ggplot(summer_data, aes(x = factor(Year), y = Lst, fill = factor(Year))) +
+  geom_boxplot(outlier.shape = NA, width = 0.6, color = "gray30", alpha = 0.7) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.15), aes(color = factor(Year)), size = 3, alpha = 0.6) +
+  labs(title = "Distribution of Land Surface Temperature Over Years",
+       x = "Year",
+       y = "Lst") +
+  theme_pubr() +
+  scale_fill_viridis_d(option = "C") +
+  coord_cartesian(ylim = quantile(summer_data$Lst, c(0.05, 0.95))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        panel.grid.major.x = element_blank(),
+        legend.position = "bottom",  # Legend at the bottom
+        legend.title = element_blank(),
+        legend.text = element_text(size = 10),
+        plot.title = element_text(size = 18, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+```
+
+```{r}
+my_color_scale <- scale_fill_gradientn(colors = viridis::viridis(10), 
+                                       name = "Lst", 
+                                       breaks = seq(25, 55, by = 5))
+
+ggplot(summer_data, aes(x = Year, y = Month, fill = Lst)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(Lst, 1)), color = "black", size = 3) +  # Add temperature values
+  labs(title = "Heat Map of Land Surface Temperature Over Months and Years",
+       x = "Year",
+       y = "Month") +
+  my_color_scale +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text.y = element_text(hjust = 1, vjust = 0.5),
+        legend.position = "right",
+        plot.title = element_text(size = 18, face = "bold"),
+        axis.title = element_text(size = 14),
+        legend.text = element_text(size = 12))
+```
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+# Assuming you have loaded the summer_data dataset
+
+ggplot(summer_data, aes(x = factor(Month), y = Lst, fill = factor(Month))) +
+  geom_violin(trim = FALSE, scale = "width", alpha = 0.7) +
+  geom_jitter(position = position_jitter(0.2), color = "gray20", size = 0.5, alpha = 0.5) +
+  labs(title = "Monthly Distribution of Land Surface Temperature",
+       x = "Month",
+       y = "Lst") +
+  theme_pubr() +
+  scale_fill_viridis_d(option = "C") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        panel.grid.major.x = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 10),
+        plot.title = element_text(size = 18, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+```
+

@@ -6,6 +6,11 @@ website:
  sidebar:
     style: "docked"
     search: true
+    logo: profile.png
+    type: "light"
+    background: "primary"
+    foreground: "light"
+    collapse-level: 2 
     contents:
       - section: "Main Page"
         contents:
@@ -21,21 +26,15 @@ website:
         contents:
           - Data_Integration_and_Selection.qmd
           - Data_Cleaning.qmd
+          - Data_Visualization.qmd
       - section: "Data Integration and Joins"
       - section: "Data Integration and Joins"
       - section: "Statistical Methods"
 
-      
-      
-
-
-
-          
-
           
 format:
   html:
-    theme: minty
+    theme: flatly
     css: styles.css
     toc: true
 
