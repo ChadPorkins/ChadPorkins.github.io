@@ -12,4 +12,3 @@ Finally, a table was created which includes all the fields of artificial turf gr
 Spatial_Join =  read.csv("Spatial_Join.csv")
 head(Spatial_Join)
 ```
-

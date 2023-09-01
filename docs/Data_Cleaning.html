@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Weather stations Spatial Join</title>
+<title>Data preprocessing and summarization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Weather stations Spatial Join</h1>
+      <h1 class="quarto-secondary-nav-title">Data preprocessing and summarization</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -190,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link active">Weather stations Spatial Join</a>
+  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link">Weather stations Spatial Join</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -201,7 +201,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Cleaning and Preprocessing</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data Cleaning and Preprocessing</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Integration_and_Selection.html" class="sidebar-item-text sidebar-link">Data Integration, Selection, and NA Value Handling</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Cleaning.html" class="sidebar-item-text sidebar-link active">Data preprocessing and summarization</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
@@ -224,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Weather stations Spatial Join</h1>
+<h1 class="title d-none d-lg-block">Data preprocessing and summarization</h1>
 </div>
 
 
@@ -238,25 +255,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To locate the nearest weather station for each artificial turf field, I utilized the spatial join tool within ARC GIS PRO software.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="LST2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure 2 shows green circles for the artificial turf grass field and red triangles for the weather stations.</figcaption><p></p>
-</figure>
-</div>
-<p>Finally, a table was created which includes all the fields of artificial turf grass, the closest weather station, and the distance between them.</p>
+<p>In order to ensure the accuracy of the Land Surface Temperature (LST) data, a histogram was conducted for analysis; from the histogram, it was found that it had a left-skewed distribution with a tail of small and unusual values. These values were likely outliers due to unusual cold days during the summer or cloud effects. To maintain the integrity of our dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary for removing potential outliers that could distort the data analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Spatial_Join <span class="ot">=</span>  <span class="fu">read.csv</span>(<span class="st">"Spatial_Join.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Spatial_Join)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(final_data, <span class="fu">aes</span>(<span class="at">x =</span> Lst)) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"#006400"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..count.. <span class="sc">*</span> <span class="fl">0.5</span>), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"LST"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">title =</span> <span class="st">"Histogram and Density of LST"</span>) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Data_Cleaning_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature (LST), it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>summer_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lst<span class="sc">&gt;</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date, Year, Month ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="at">.funs =</span> median, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(summer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  ID Latitude Longitude       Dist  Station_ID
-1  1 40.85862 -73.87169 0.07968540 USW00014732
-2  2 40.87307 -73.83959 0.10213630 USW00014732
-3  3 40.83388 -73.92410 0.06990400 USW00014732
-4  4 40.83326 -73.92445 0.06964582 USW00014732
-5  5 40.87735 -73.90828 0.10187164 USW00014732
-6  6 40.87006 -73.79119 0.12711889 USW00014732</code></pre>
+<pre><code>Rows: 30
+Columns: 10
+$ Date          &lt;chr&gt; "2013-06-01", "2013-07-01", "2013-08-01", "2014-06-01", …
+$ Year          &lt;int&gt; 2013, 2013, 2013, 2014, 2014, 2014, 2015, 2015, 2015, 20…
+$ Month         &lt;int&gt; 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6,…
+$ X             &lt;dbl&gt; 49.5, 134.5, 219.5, 317.5, 415.5, 513.5, 604.0, 692.0, 7…
+$ ID            &lt;dbl&gt; 49.5, 45.5, 49.5, 49.5, 49.5, 49.5, 51.0, 46.0, 49.5, 49…
+$ Lst           &lt;dbl&gt; 42.30330, 43.07748, 38.90109, 40.72247, 42.04524, 36.220…
+$ Precipitation &lt;dbl&gt; 8.16, 2.80, 1.97, 3.69, 3.99, 3.50, 4.80, 3.54, 1.88, 2.…
+$ Max.Temp.C    &lt;dbl&gt; 27.61111, 31.00000, 27.83333, 26.66667, 29.05556, 27.833…
+$ Min.Temp.C    &lt;dbl&gt; 19.11111, 23.61111, 20.77778, 18.33333, 20.88889, 20.111…
+$ Avg.Temp.C    &lt;dbl&gt; 23.33333, 27.33333, 24.33333, 22.50000, 25.00000, 23.944…</code></pre>
 </div>
 </div>
 

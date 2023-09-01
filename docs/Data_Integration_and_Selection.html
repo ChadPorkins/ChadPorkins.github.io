@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Weather stations Spatial Join</title>
+<title>Data Integration, Selection, and NA Value Handling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Weather stations Spatial Join</h1>
+      <h1 class="quarto-secondary-nav-title">Data Integration, Selection, and NA Value Handling</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -190,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link active">Weather stations Spatial Join</a>
+  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link">Weather stations Spatial Join</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -201,7 +201,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Cleaning and Preprocessing</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data Cleaning and Preprocessing</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Integration_and_Selection.html" class="sidebar-item-text sidebar-link active">Data Integration, Selection, and NA Value Handling</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
@@ -224,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Weather stations Spatial Join</h1>
+<h1 class="title d-none d-lg-block">Data Integration, Selection, and NA Value Handling</h1>
 </div>
 
 
@@ -238,25 +250,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To locate the nearest weather station for each artificial turf field, I utilized the spatial join tool within ARC GIS PRO software.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="LST2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure 2 shows green circles for the artificial turf grass field and red triangles for the weather stations.</figcaption><p></p>
-</figure>
-</div>
-<p>Finally, a table was created which includes all the fields of artificial turf grass, the closest weather station, and the distance between them.</p>
+<p>After collecting all tables and data into separate CSV files, it is important to connect them to a centralized table for statistical and spatial conclusions for the seminar.</p>
+<p>It is important to ensure that the centralized table has only the necessary columns without any missing values of LST due to clouds, as they are irrelevant. Additionally, we need the date column to be in a proper date format rather than a charter format. This will help us create new date-based columns and perform time-based data analysis.</p>
+<p>Adding the first of the month to each date allows the date column to have a date class, but it is irrelevant to statistical and spatial conclusions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Spatial_Join <span class="ot">=</span>  <span class="fu">read.csv</span>(<span class="st">"Spatial_Join.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Spatial_Join)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Spatial_Join <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Spatial_Join.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Weather_Data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Weather_Data.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="st">'L8/All/'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>csv_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> folder_path, <span class="at">pattern =</span> <span class="st">"*.csv"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> csv_files <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read.csv) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(Spatial_Join, <span class="at">by =</span> <span class="st">"ID"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(Weather_Data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Station_ID"</span>, <span class="st">"Date"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ID, <span class="at">Lst =</span> first, Date, Precipitation, Max.Temp.C, Min.Temp.C, Avg.Temp.C) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(<span class="st">"01"</span>, Date), <span class="at">format =</span> <span class="st">"%d %b-%y"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">format</span>(Date, <span class="st">"%m"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">format</span>(Date, <span class="st">"%Y"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Date) <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Lst))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(final_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  ID Latitude Longitude       Dist  Station_ID
-1  1 40.85862 -73.87169 0.07968540 USW00014732
-2  2 40.87307 -73.83959 0.10213630 USW00014732
-3  3 40.83388 -73.92410 0.06990400 USW00014732
-4  4 40.83326 -73.92445 0.06964582 USW00014732
-5  5 40.87735 -73.90828 0.10187164 USW00014732
-6  6 40.87006 -73.79119 0.12711889 USW00014732</code></pre>
+<pre><code>Rows: 2,737
+Columns: 9
+$ ID            &lt;int&gt; 2, 47, 75, 33, 17, 69, 92, 84, 50, 16, 35, 81, 82, 12, 5…
+$ Lst           &lt;dbl&gt; 43.12277, 37.72914, 43.83201, 34.40853, 38.75967, 40.277…
+$ Date          &lt;date&gt; 2013-06-01, 2013-06-01, 2013-06-01, 2013-06-01, 2013-06…
+$ Precipitation &lt;dbl&gt; 8.16, 8.16, 8.16, 8.74, 8.74, 8.16, 7.95, 7.95, 8.16, 8.…
+$ Max.Temp.C    &lt;dbl&gt; 27.61111, 27.61111, 27.61111, 27.77778, 27.77778, 27.611…
+$ Min.Temp.C    &lt;dbl&gt; 19.11111, 19.11111, 19.11111, 18.11111, 18.11111, 19.111…
+$ Avg.Temp.C    &lt;dbl&gt; 23.33333, 23.33333, 23.33333, 22.94444, 22.94444, 23.333…
+$ Month         &lt;chr&gt; "06", "06", "06", "06", "06", "06", "06", "06", "06", "0…
+$ Year          &lt;chr&gt; "2013", "2013", "2013", "2013", "2013", "2013", "2013", …</code></pre>
 </div>
 </div>
 

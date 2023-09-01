@@ -1,0 +1,43 @@
+---
+title: "Data Integration, Selection, and NA Value Handling"
+---
+
+After collecting all tables and data into separate CSV files, it is important to connect them to a centralized table for statistical and spatial conclusions for the seminar. 
+
+It is important to ensure that the centralized table has only the necessary columns without any missing values of LST due to clouds, as they are irrelevant. Additionally, we need the date column to be in a proper date format rather than a charter format. This will help us create new date-based columns and perform time-based data analysis.
+
+Adding the first of the month to each date allows the date column to have a date class, but it is irrelevant to statistical and spatial conclusions.
+
+
+
+```{r,warning=FALSE,message=FALSE}
+library(dplyr)
+
+Spatial_Join <- read.csv("Spatial_Join.csv")
+Weather_Data <- read.csv("Weather_Data.csv")
+
+folder_path <- 'L8/All/'
+csv_files <- list.files(path = folder_path, pattern = "*.csv", full.names = TRUE)
+
+combined_data <- csv_files %>%
+  lapply(read.csv) %>%
+  bind_rows()
+
+final_data <- combined_data %>%
+  left_join(Spatial_Join, by = "ID") %>%
+  left_join(Weather_Data, by = c("Station_ID", "Date")) %>%
+  select(ID, Lst = first, Date, Precipitation, Max.Temp.C, Min.Temp.C, Avg.Temp.C) %>%
+  mutate(Date = as.Date(paste("01", Date), format = "%d %b-%y")) %>%
+  mutate(Month = format(Date, "%m")) %>%
+  mutate(Year = format(Date, "%Y")) %>%
+  arrange(Date) %>%
+  filter(!is.na(Lst))
+
+glimpse(final_data)
+
+```
+
+```{r,echo=FALSE}
+write.csv(final_data,"final_data.csv")
+```
+

@@ -1,0 +1,38 @@
+---
+title: "Data preprocessing and summarization"
+---
+
+In order to ensure the accuracy of the Land Surface Temperature (LST) data, a histogram was conducted for analysis; from the histogram, it was found that it had a left-skewed distribution with a tail of small and unusual values. These values were likely outliers due to unusual cold days during the summer or cloud effects. To maintain the integrity of our dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary for removing potential outliers that could distort the data analysis.
+
+```{r,echo=FALSE}
+final_data = read.csv("final_data.csv")
+```
+
+```{r,message=FALSE,warning=FALSE}
+library(tidyverse)
+
+
+ggplot(final_data, aes(x = Lst)) +
+  geom_histogram(binwidth = 0.5, fill = "#006400", color = "black") +
+  geom_density(aes(y = ..count.. * 0.5), color = "blue", size = 1) +  
+labs(x = "LST", y = "Frequency", title = "Histogram and Density of LST") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 20, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 14))
+
+```
+
+In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature (LST), it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.
+
+```{r}
+
+summer_data <- final_data %>%
+  filter(Lst>20) %>%
+  group_by(Date, Year, Month ) %>%
+  summarise_all(.funs = mean, na.rm = TRUE)  %>%
+  ungroup()
+glimpse(summer_data)
+```
+
+

@@ -16,7 +16,11 @@ website:
           - Landsat8.qmd
           - Stations_Data.qmd
           - Stations_Data_Spatial_Join.qmd
+          - Weather_Data.qmd
       - section: "Data Cleaning and Preprocessing"
+        contents:
+          - Data_Integration_and_Selection.qmd
+          - Data_Cleaning.qmd
       - section: "Data Integration and Joins"
       - section: "Data Integration and Joins"
       - section: "Statistical Methods"

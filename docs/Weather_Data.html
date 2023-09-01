@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Weather stations Spatial Join</title>
+<title>Weather Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Weather stations Spatial Join</h1>
+      <h1 class="quarto-secondary-nav-title">Weather Data</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -190,18 +190,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link active">Weather stations Spatial Join</a>
+  <a href="./Stations_Data_Spatial_Join.html" class="sidebar-item-text sidebar-link">Weather stations Spatial Join</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Weather_Data.html" class="sidebar-item-text sidebar-link">Weather Data</a>
+  <a href="./Weather_Data.html" class="sidebar-item-text sidebar-link active">Weather Data</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Cleaning and Preprocessing</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data Cleaning and Preprocessing</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Integration_and_Selection.html" class="sidebar-item-text sidebar-link">Data Integration, Selection, and NA Value Handling</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
@@ -224,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Weather stations Spatial Join</h1>
+<h1 class="title d-none d-lg-block">Weather Data</h1>
 </div>
 
 
@@ -238,17 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To locate the nearest weather station for each artificial turf field, I utilized the spatial join tool within ARC GIS PRO software.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="LST2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure 2 shows green circles for the artificial turf grass field and red triangles for the weather stations.</figcaption><p></p>
-</figure>
-</div>
-<p>Finally, a table was created which includes all the fields of artificial turf grass, the closest weather station, and the distance between them.</p>
+<p>Upon analyzing the table resulting from the Spatial Join, it was found that all artificial turf fields are located near three weather stations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Spatial_Join <span class="ot">=</span>  <span class="fu">read.csv</span>(<span class="st">"Spatial_Join.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Spatial_Join)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID Latitude Longitude       Dist  Station_ID
 1  1 40.85862 -73.87169 0.07968540 USW00014732
@@ -257,6 +260,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4  4 40.83326 -73.92445 0.06964582 USW00014732
 5  5 40.87735 -73.90828 0.10187164 USW00014732
 6  6 40.87006 -73.79119 0.12711889 USW00014732</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Spatial_Join<span class="sc">$</span>Station_ID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+USW00014732 USW00014734 USW00094789 
+         81          11           6 </code></pre>
+</div>
+</div>
+<p>The National Weather Service website was utilized to gather climatic data for these stations. The findings revealed that the following three stations are:</p>
+<ul>
+<li><p>LAGUARDIA AIRPORT, NY US.</p></li>
+<li><p>NEWARK LIBERTY INTERNATIONAL AIRPORT, NJ US.</p></li>
+<li><p>JFK INTERNATIONAL AIRPORT, NY US.</p></li>
+</ul>
+<p>One data frame was created to collect the following climate data in Fahrenheit and in Celsius for each weather station:</p>
+<ul>
+<li><p>Monthly Mean Max Temperature.</p></li>
+<li><p>Monthly Mean Min Temperature.</p></li>
+<li><p>Monthly Mean Avg.</p></li>
+<li><p>Monthly Total Precipitation.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Weather_Data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Weather_Data.csv"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(Weather_Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 90
+Columns: 9
+$ Station_ID    &lt;chr&gt; "USW00014732", "USW00014732", "USW00014732", "USW0001473…
+$ Date          &lt;chr&gt; "Jun-13", "Jul-13", "Aug-13", "Jun-14", "Jul-14", "Aug-1…
+$ Max.Temp      &lt;dbl&gt; 81.7, 87.8, 82.1, 80.0, 84.3, 82.1, 78.4, 85.9, 86.4, 81…
+$ Min.Temp      &lt;dbl&gt; 66.4, 74.5, 69.4, 65.0, 69.6, 68.2, 64.1, 72.5, 72.3, 65…
+$ Avg.Temp      &lt;dbl&gt; 74.0, 81.2, 75.8, 72.5, 77.0, 75.1, 71.3, 79.2, 79.3, 73…
+$ Precipitation &lt;dbl&gt; 8.16, 2.80, 1.97, 3.69, 3.99, 3.50, 4.80, 3.54, 1.88, 2.…
+$ Max.Temp.C    &lt;dbl&gt; 27.61111, 31.00000, 27.83333, 26.66667, 29.05556, 27.833…
+$ Min.Temp.C    &lt;dbl&gt; 19.11111, 23.61111, 20.77778, 18.33333, 20.88889, 20.111…
+$ Avg.Temp.C    &lt;dbl&gt; 23.33333, 27.33333, 24.33333, 22.50000, 25.00000, 23.944…</code></pre>
 </div>
 </div>
 

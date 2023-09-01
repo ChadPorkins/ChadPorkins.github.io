@@ -1,0 +1,40 @@
+---
+title: "Weather Data"
+---
+
+Upon analyzing the table resulting from the Spatial Join, it was found that all artificial turf fields are located near three weather stations.
+
+```{r,echo=FALSE}
+Spatial_Join =  read.csv("Spatial_Join.csv")
+head(Spatial_Join)
+```
+
+```{r}
+table(Spatial_Join$Station_ID)
+```
+
+The National Weather Service website was utilized to gather climatic data for these stations. The findings revealed that the following three stations are:
+
+-   LAGUARDIA AIRPORT, NY US.
+
+-   NEWARK LIBERTY INTERNATIONAL AIRPORT, NJ US.
+
+-   JFK INTERNATIONAL AIRPORT, NY US.
+
+One data frame was created to collect the following climate data in Fahrenheit and in Celsius for each weather station:
+
+-   Monthly Mean Max Temperature.
+
+-   Monthly Mean Min Temperature.
+
+-   Monthly Mean Avg.
+
+-   Monthly Total Precipitation.
+
+```{r,message=FALSE,warning=FALSE}
+library(dplyr)
+Weather_Data = read.csv("Weather_Data.csv")
+glimpse(Weather_Data)
+
+```
+
