@@ -22,12 +22,18 @@ website:
           - Stations_Data.qmd
           - Stations_Data_Spatial_Join.qmd
           - Weather_Data.qmd
-      - section: "Time Series Analysis"
       - section: "Data Cleaning and Preprocessing"
         contents:
           - Data_Integration_and_Selection.qmd
           - Data_Cleaning.qmd
-          - Data_Visualization.qmd
+      - section: "Visualizing Data, Investigating Correlations, and Applying Regression Analysis"
+        contents: 
+          - Data_Visualisation.qmd
+          - Correlations.qmd
+          - Regression.qmd
+          
+      - section: "Time Series Analysis"
+      
       - section: "Data Integration and Joins"
       
       - section: "Data Integration and Joins"

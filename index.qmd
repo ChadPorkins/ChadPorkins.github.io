@@ -18,8 +18,7 @@ about:
        href: mailto:alderson@post.bgu.ac.il
 ---
 
-:::{#first-heading}
-
+::: {#first-heading}
 ### [Supervised by:]{.underline}
 
 **Professor Itai Kloog.**
@@ -29,7 +28,6 @@ Head of the Geoinformatics Department at Ben Gurion University of the Negev.
 ### [Acknowledgments:]{.underline}
 
 I thank Professor Itai Kloog and ScD, MSc, Homero Harari from the Icahn School of Medicine at Mount Sinai, who gave me the privilege and the honor to work with them this year in academic research and guided me in my first steps in the academic world.
-
 :::
 
 Jacob Alderson's seminar work In Geographic Information Technologies, In the Department of Environmental, Geoinformatic and Urban Planning Sciences in Ben Gurion University of the Negev.

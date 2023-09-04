@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite</title>
+<title>Investigating Correlations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite</h1>
+      <h1 class="quarto-secondary-nav-title">Investigating Correlations</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -185,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Landsat8.html" class="sidebar-item-text sidebar-link active">Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite</a>
+  <a href="./Landsat8.html" class="sidebar-item-text sidebar-link">Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -240,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Correlations.html" class="sidebar-item-text sidebar-link">Investigating Correlations</a>
+  <a href="./Correlations.html" class="sidebar-item-text sidebar-link active">Investigating Correlations</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -272,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite</h1>
+<h1 class="title d-none d-lg-block">Investigating Correlations</h1>
 </div>
 
 
@@ -286,90 +286,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To retrieve Land Surface Temperature data, I utilized Google Earth Engine, a web application that allowed me to write code based on physical remote sensing principles. I specifically used band 10, which is the thermal band on the Landsat 8 satellite, to extract LST values from the satellite’s data. (USGS, (n.d.))</p>
-<p>To make the code function properly, I utilized a polygon layer named NEMIA that encompasses the eastern coast of North America. Additionally, I transformed the table of synthetic fields with corresponding coordinates into a point layer using ARC GIS PRO.</p>
-<p>First, the code adds the layers representing NEMIA (in red) and Fields (in green) to the map. Then, it centers the view on NEMIA, and retrieves Landsat 8 imagery for June 2018 within NEMIA. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al.&nbsp;(2019) in their research.</p>
-<p>Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.</p>
-<p>To enhance the focus on synthetic grass and minimize the impact of the surrounding urban environment, the resolution for temperature data is set to 30 meters before projecting LST data. LST values are extracted from the reprojected data for each field. Finally, extracted LST data is exported as a CSV file.</p>
-<hr>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> The shape files need to be uploaded to Google Earth Engine.</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>var NEMIA <span class="ot">=</span> NEMIA Shape File</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>var Fields <span class="ot">=</span> Fields Shape File</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Map.addLayer</span>(NEMIA, { color<span class="sc">:</span> <span class="st">'red'</span> });</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Map.centerObject</span>(NEMIA, <span class="dv">4</span>);</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Map.addLayer</span>(Fields, { color<span class="sc">:</span> <span class="st">'green'</span> }, <span class="st">'Fields'</span>);</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>var landsat8 <span class="ot">=</span> <span class="fu">ee.ImageCollection</span>(<span class="st">"LANDSAT/LC08/C02/T1_L2"</span>);</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>var landsat8Filtered <span class="ot">=</span> <span class="fu">landsat8.filterBounds</span>(NEMIA);</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>var landsat8DateFiltered <span class="ot">=</span> <span class="fu">landsat8Filtered.filterDate</span>(<span class="st">'2018-06-01'</span>, <span class="st">'2018-06-30'</span>);</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Cloud masking <span class="cf">function</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>var masking <span class="ot">=</span> <span class="cf">function</span> (img) {</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  var cloudshadowBitmask <span class="ot">=</span> (<span class="dv">1</span> <span class="sc">&lt;</span><span class="er">&lt;</span> <span class="dv">4</span>);</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  var cloudshadowmask <span class="ot">=</span> (<span class="dv">1</span> <span class="sc">&lt;</span><span class="er">&lt;</span> <span class="dv">3</span>);</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  var cirus <span class="ot">=</span> (<span class="dv">1</span> <span class="sc">&lt;</span><span class="er">&lt;</span> <span class="dv">2</span>);</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  var qa <span class="ot">=</span> <span class="fu">img.select</span>(<span class="st">'QA_PIXEL'</span>);</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  var maskshadow <span class="ot">=</span> <span class="fu">qa.bitwiseAnd</span>(cloudshadowBitmask)<span class="fu">.eq</span>(<span class="dv">0</span>);</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  var maskcloud <span class="ot">=</span> <span class="fu">qa.bitwiseAnd</span>(cloudshadowmask)<span class="fu">.eq</span>(<span class="dv">0</span>);</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  var maskValue2 <span class="ot">=</span> <span class="fu">qa.bitwiseAnd</span>(cirus)<span class="fu">.eq</span>(<span class="dv">0</span>); <span class="sc">/</span><span class="er">/</span> Add bit mask <span class="cf">for</span> value <span class="dv">2</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  var mask <span class="ot">=</span> <span class="fu">maskshadow.and</span>(maskcloud)<span class="fu">.and</span>(maskValue2); <span class="sc">/</span><span class="er">/</span> Include new mask</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  return <span class="fu">img.updateMask</span>(mask);</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>};</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>var cloudFreeImage <span class="ot">=</span> <span class="fu">landsat8DateFiltered.sort</span>(<span class="st">'CLOUD_COVER_LAND'</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.map</span>(masking)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.mean</span>();</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>var clippedImage <span class="ot">=</span> <span class="fu">cloudFreeImage.clip</span>(NEMIA);</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Apply scaling factors</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>var scale <span class="ot">=</span> <span class="cf">function</span> <span class="fu">applyScaleFactors</span>(image) {</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  var opticalBands <span class="ot">=</span> <span class="fu">image.select</span>(<span class="st">'SR_B.'</span>)<span class="fu">.multiply</span>(<span class="fl">0.0000275</span>)<span class="fu">.add</span>(<span class="sc">-</span><span class="fl">0.2</span>);</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  var thermalBands <span class="ot">=</span> <span class="fu">image.select</span>(<span class="st">'ST_B.*'</span>)<span class="fu">.multiply</span>(<span class="fl">0.00341802</span>)<span class="fu">.add</span>(<span class="fl">149.0</span>);</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  return <span class="fu">image.addBands</span>(opticalBands, null, true)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.addBands</span>(thermalBands, null, true);</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>};</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>var scaledImage <span class="ot">=</span> <span class="fu">scale</span>(clippedImage);</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">Map.addLayer</span>(scaledImage);</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>var thermalBand <span class="ot">=</span> <span class="fu">scaledImage.select</span>(<span class="st">'ST_B10'</span>);</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>var LSTcelcius <span class="ot">=</span> <span class="fu">thermalBand.subtract</span>(<span class="fl">273.15</span>);</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>var LST_Color <span class="ot">=</span> { min<span class="sc">:</span> <span class="dv">0</span>, max<span class="sc">:</span> <span class="dv">30</span>, palette<span class="sc">:</span> [<span class="st">'blue'</span>, <span class="st">'limegreen'</span>, <span class="st">'yellow'</span>, <span class="st">'orange'</span>] };</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">Map.addLayer</span>(LSTcelcius, LST_Color, <span class="st">'LST1'</span>);</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Set the desired resolution to <span class="dv">30</span> meters</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>var desiredResolution <span class="ot">=</span> <span class="dv">30</span>;</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Reproject LSTcelcius to the desired resolution</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>var LSTcelcius30m <span class="ot">=</span> <span class="fu">LSTcelcius.reproject</span>({</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  crs<span class="sc">:</span> <span class="fu">LSTcelcius.projection</span>()<span class="fu">.crs</span>(),</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  scale<span class="sc">:</span> desiredResolution,</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>});</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Extract values from LSTcelcius raster to points</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>var extractedDataFields <span class="ot">=</span> <span class="fu">LSTcelcius30m.reduceRegions</span>({</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  collection<span class="sc">:</span> Fields,</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  reducer<span class="sc">:</span> <span class="fu">ee.Reducer.first</span>(),</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  scale<span class="sc">:</span> desiredResolution,</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>});</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Export the extracted data to a CSV file</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">Export.table.toDrive</span>({</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  collection<span class="sc">:</span> extractedDataFields,</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  description<span class="sc">:</span> <span class="st">'Points_Fields_June_2018'</span>,</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  folder<span class="sc">:</span> <span class="st">'L8_Points_Fields_Seminar'</span>,</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  fileFormat<span class="sc">:</span> <span class="st">'CSV'</span>,</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>});</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="LST.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 1. NEMIA layer with LST values from the code in June 2018.</figcaption><p></p>
-</figure>
+<p>In order to perform correlation tests between the LST data and data from weather stations, a Shapiro normality test needs to be conducted to determine the appropriate method for the correlation tests.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>shapiro_results <span class="ot">&lt;-</span> summer_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(Lst,Precipitation,Max.Temp.C,Min.Temp.C,Avg.Temp.C) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(<span class="fu">list</span>(<span class="at">p_value =</span> <span class="sc">~</span><span class="fu">shapiro.test</span>(.)<span class="sc">$</span>p.value))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(shapiro_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 5
+$ Lst_p_value           &lt;dbl&gt; 0.05067797
+$ Precipitation_p_value &lt;dbl&gt; 0.3206028
+$ Max.Temp.C_p_value    &lt;dbl&gt; 0.2804596
+$ Min.Temp.C_p_value    &lt;dbl&gt; 0.008113413
+$ Avg.Temp.C_p_value    &lt;dbl&gt; 0.03798488</code></pre>
+</div>
+</div>
+<p>From the normality test results, it was found that the average and the minimum temperatures aren’t normally distributed. In light of that, all the correlation tests will be done with the “Kendall” method to simplify the statical calculations.</p>
+<hr>
+<p>Based on the plot results interpretation, it can be concluded that there exists a low to medium significant positive correlation between the Lst and Temperature variables. On the other hand, the correlation between Lst and Precipitation is negligible and insignificant. Considering these findings alongside the normal distribution of Lst values, a standard linear model will be conducted for further analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>create_scatter_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x_var, y_var, x_label, y_label, plot_color, header) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  correlation_result <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(data[[x_var]], data[[y_var]], <span class="at">method =</span> <span class="st">"kendall"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[x_var]], <span class="at">y =</span> .data[[y_var]])) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">color =</span> plot_color, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"#d62728"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Corr ="</span>, <span class="fu">round</span>(correlation_result<span class="sc">$</span>estimate, <span class="dv">2</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"p ="</span>, <span class="fu">signif</span>(correlation_result<span class="sc">$</span>p.value, <span class="at">digits =</span> <span class="dv">3</span>))),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"#d62728"</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> x_label, <span class="at">y =</span> y_label, <span class="at">title =</span> header) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(plot)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Avg.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Avg Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#1f77b4"</span>, <span class="st">"Avg Temp C vs. LST"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Min.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Min Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#800080"</span>, <span class="st">"Min Temp C vs. LST"</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Max.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Max Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#2ca02c"</span>, <span class="st">"Max Temp C vs. LST"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Precipitation"</span>, <span class="st">"Lst"</span>, <span class="st">"Precipitation"</span>, <span class="st">"LST"</span>, <span class="st">"#000000"</span>, <span class="st">"Precipitation vs. LST"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>combined_plots <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(plot1, plot2, plot3, plot4, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>combined_plots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Correlations_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 
