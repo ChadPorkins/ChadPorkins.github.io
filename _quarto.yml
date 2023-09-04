@@ -22,11 +22,7 @@ website:
           - Stations_Data.qmd
           - Stations_Data_Spatial_Join.qmd
           - Weather_Data.qmd
-      - section: "Time Series Plots"
-        contents:
-          - June.qmd
-          - July.qmd
-          - August.qmd
+      - section: "Time Series Analysis"
       - section: "Data Cleaning and Preprocessing"
         contents:
           - Data_Integration_and_Selection.qmd

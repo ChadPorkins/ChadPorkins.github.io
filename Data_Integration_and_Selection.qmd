@@ -36,5 +36,6 @@ glimpse(final_data)
 ```
 
 ```{r,echo=FALSE}
-write.csv(final_data,"final_data.csv")
+write.csv(final_data[, -1], "final_data.csv", row.names = FALSE)
+
 ```

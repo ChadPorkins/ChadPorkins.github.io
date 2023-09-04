@@ -25,18 +25,20 @@ labs(x = "LST", y = "Frequency", title = "Histogram and Density of LST") +
 
 In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature (LST), it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.
 
-```{r}
+```{r,warning=FALSE,message=FALSE}
 
+library(dplyr)
 summer_data <- final_data %>%
   filter(Lst>20) %>%
   group_by(Date, Year, Month ) %>%
   summarise_all(.funs = mean, na.rm = TRUE)  %>%
+  select(-ID) %>%
   ungroup()
+
 glimpse(summer_data)
 ```
 
 ```{r,echo=FALSE}
-write.csv(summer_data, "summer_data.csv")
+write.csv(summer_data[, -1], "summer_data.csv", row.names = FALSE)
 
 ```
-

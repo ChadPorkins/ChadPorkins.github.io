@@ -207,12 +207,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data Cleaning and Preprocessing</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Time Series Plots</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./June.html" class="sidebar-item-text sidebar-link">June</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  July.qmd
+  </li>
+          <li class="sidebar-item">
+  August.qmd
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Data Cleaning and Preprocessing</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Data_Integration_and_Selection.html" class="sidebar-item-text sidebar-link">Data Integration, Selection, and NA Value Handling</a>
@@ -224,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 </li>
           <li class="sidebar-item">
-  Data_visualization.qmd
+  Data_Visualization.qmd
   </li>
       </ul>
   </li>
@@ -285,20 +306,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature (LST), it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>summer_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lst<span class="sc">&gt;</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date, Year, Month ) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="at">.funs =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(summer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>summer_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lst<span class="sc">&gt;</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date, Year, Month ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="at">.funs =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(summer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 30
-Columns: 10
+Columns: 8
 $ Date          &lt;chr&gt; "2013-06-01", "2013-07-01", "2013-08-01", "2014-06-01", …
 $ Year          &lt;int&gt; 2013, 2013, 2013, 2014, 2014, 2014, 2015, 2015, 2015, 20…
 $ Month         &lt;int&gt; 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6, 7, 8, 6,…
-$ X             &lt;dbl&gt; 49.5000, 134.5000, 219.5000, 317.5000, 415.5000, 513.500…
-$ ID            &lt;dbl&gt; 49.50000, 49.48611, 49.50000, 49.50000, 49.50000, 49.500…
 $ Lst           &lt;dbl&gt; 42.28527, 43.00233, 39.00369, 40.40266, 41.68047, 36.257…
 $ Precipitation &lt;dbl&gt; 8.212245, 2.893056, 2.308367, 3.704694, 4.166020, 3.3493…
 $ Max.Temp.C    &lt;dbl&gt; 27.49376, 31.01157, 27.84977, 26.77098, 29.10374, 27.884…
