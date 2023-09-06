@@ -32,7 +32,6 @@ summer_data <- final_data %>%
   filter(Lst>20) %>%
   group_by(Date, Year, Month ) %>%
   summarise_all(.funs = mean, na.rm = TRUE)  %>%
-  select(-ID) %>%
   ungroup()
 
 glimpse(summer_data)

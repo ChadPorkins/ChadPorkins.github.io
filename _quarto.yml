@@ -31,11 +31,9 @@ website:
           - Data_Visualisation.qmd
           - Correlations.qmd
           - Regression.qmd
-          
+          - Assumptions.qmd
       - section: "Time Series Analysis"
-      
       - section: "Data Integration and Joins"
-      
       - section: "Data Integration and Joins"
       - section: "Statistical Methods"
 

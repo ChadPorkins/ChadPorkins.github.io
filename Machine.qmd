@@ -1,0 +1,494 @@
+```{r}
+library(dplyr)
+library(lubridate)
+final_data = read.csv("final_data.csv")
+#final_data$Date <- as.Date(final_data$Date, format = "%m/%d/%Y")
+data_jun <- final_data %>% filter(month(Date) == 6) %>% #mutate(Month2 = format(Date, "%m")) %>%
+#  mutate(Year2 = format(Date, "%Y")) %>%
+  arrange(Date)
+data_jul <- final_data %>% filter(month(Date) == 7)
+data_aug <- final_data %>% filter(month(Date) == 8)
+```
+
+
+
+
+```{r}
+
+library(randomForest)
+library(e1071)
+library(xgboost)
+library(ggplot2)
+
+# Load your dataset (replace 'your_data' with your actual dataset)
+# Example: summer_data <- read.csv("your_data.csv")
+
+# Split the dataset into training and testing sets (e.g., 80% training, 20% testing)
+set.seed(123)  # for reproducibility
+sample_indices <- sample(1:nrow(summer_data), 0.8 * nrow(summer_data))
+train_data <- summer_data[sample_indices, ]
+test_data <- summer_data[-sample_indices, ]
+
+# Fit a Random Forest model on the training data
+rf_model <- randomForest(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit a Support Vector Machine (SVM) model on the training data
+svm_model <- svm(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit an XGBoost model on the training data
+xgb_model <- xgboost(data = as.matrix(train_data[, c("Avg.Temp.C", "Min.Temp.C")]), 
+                     label = train_data$Lst, 
+                     objective = "reg:squarederror", nrounds = 100)
+
+# Create a new dataset with predictions from the three models on the testing set
+predictions <- data.frame(
+  Actual = test_data$Lst,
+  RandomForest_Pred = predict(rf_model, newdata = test_data),
+  SVM_Pred = predict(svm_model, newdata = test_data),
+  XGBoost_Pred = predict(xgb_model, as.matrix(test_data[, c("Avg.Temp.C", "Min.Temp.C")]))
+)
+
+# Create separate density plots for Actual vs. Predictions for each model
+plot_actual_rf <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
+  labs(title = "Actual vs. Random Forest",
+       x = "Values",
+       y = "Density")
+
+plot_actual_svm <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = SVM_Pred), fill = "red", alpha = 0.5) +
+  labs(title = "Actual vs. SVM",
+       x = "Values",
+       y = "Density")
+
+plot_actual_xgb <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = XGBoost_Pred), fill = "purple", alpha = 0.5) +
+  labs(title = "Actual vs. XGBoost",
+       x = "Values",
+       y = "Density")
+
+# Display the plots
+library(gridExtra)
+grid.arrange(plot_actual_rf, plot_actual_svm, plot_actual_xgb, 
+             ncol = 2, nrow = 2)
+
+
+```
+
+```{r}
+# Install and load required packages if not already loaded
+library(ggplot2)
+
+# Assuming you have the 'predictions' dataframe with 'Actual' and 'XGBoost_Pred' columns
+# Replace 'predictions' with your actual dataframe if needed
+
+# Scatterplot of Actual vs. Predicted values
+scatterplot <- ggplot(predictions, aes(x = Actual, y = XGBoost_Pred)) +
+  geom_point() +
+  labs(title = "Scatterplot of Actual vs. XGBoost Predicted Values",
+       x = "Actual Values",
+       y = "XGBoost Predicted Values")
+
+# Residual Plot
+predictions$residuals <- predictions$Actual - predictions$XGBoost_Pred
+residual_plot <- ggplot(predictions, aes(x = XGBoost_Pred, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residual Plot for XGBoost Model",
+       x = "XGBoost Predicted Values",
+       y = "Residuals")
+
+# Histogram of Residuals
+residual_histogram <- ggplot(predictions, aes(x = residuals)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = "Histogram of Residuals for XGBoost Model",
+       x = "Residuals",
+       y = "Frequency")
+
+# Calculate R-squared
+r_squared <- 1 - (sum(predictions$residuals^2) / sum((predictions$Actual - mean(predictions$Actual))^2))
+cat("R-squared (Coefficient of Determination):", round(r_squared, 3), "\n")
+
+# Print the plots
+print(scatterplot)
+print(residual_plot)
+print(residual_histogram)
+
+```
+
+```{r}
+# Calculate R-squared for Random Forest
+rf_actual <- predictions$Actual
+rf_predicted <- predictions$RandomForest_Pred
+rf_residuals <- rf_actual - rf_predicted
+rf_r_squared <- 1 - (sum(rf_residuals^2) / sum((rf_actual - mean(rf_actual))^2))
+
+# Calculate R-squared for SVM
+svm_actual <- predictions$Actual
+svm_predicted <- predictions$SVM_Pred
+svm_residuals <- svm_actual - svm_predicted
+svm_r_squared <- 1 - (sum(svm_residuals^2) / sum((svm_actual - mean(svm_actual))^2))
+
+# Print R-squared values
+cat("R-squared for Random Forest:", round(rf_r_squared, 3), "\n")
+cat("R-squared for SVM:", round(svm_r_squared, 3), "\n")
+
+```
+
+```{r}
+# Install and load required packages if not already loaded
+library(ggplot2)
+
+# Assuming you have the 'predictions' dataframe with 'Actual' and 'RandomForest_Pred' columns
+# Replace 'predictions' with your actual dataframe if needed
+
+# Scatterplot of Actual vs. Predicted values for Random Forest
+rf_scatterplot <- ggplot(predictions, aes(x = Actual, y = RandomForest_Pred)) +
+  geom_point() +
+  labs(title = "Random Forest: Scatterplot of Actual vs. Predicted Values",
+       x = "Actual Values",
+       y = "Random Forest Predicted Values")
+
+# Residual Plot for Random Forest
+predictions$rf_residuals <- predictions$Actual - predictions$RandomForest_Pred
+rf_residual_plot <- ggplot(predictions, aes(x = RandomForest_Pred, y = rf_residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Random Forest: Residual Plot",
+       x = "Random Forest Predicted Values",
+       y = "Residuals")
+
+# Histogram of Residuals for Random Forest
+rf_residual_histogram <- ggplot(predictions, aes(x = rf_residuals)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = "Random Forest: Histogram of Residuals",
+       x = "Residuals",
+       y = "Frequency")
+
+# Print the plots
+print(rf_scatterplot)
+print(rf_residual_plot)
+print(rf_residual_histogram)
+
+```
+
+
+
+```{r}
+library(randomForest)
+library(e1071)
+library(xgboost)
+library(ggplot2)
+
+# Load your dataset (replace 'your_data' with your actual dataset)
+# Example: summer_data <- read.csv("your_data.csv")
+
+# Split the dataset into training and testing sets (e.g., 80% training, 20% testing)
+set.seed(123)  # for reproducibility
+sample_indices <- sample(1:nrow(data_jun), 0.8 * nrow(data_jun))
+train_data <- data_jun[sample_indices, ]
+test_data <- data_jun[-sample_indices, ]
+
+# Fit a Random Forest model on the training data
+rf_model <- randomForest(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit a Support Vector Machine (SVM) model on the training data
+svm_model <- svm(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit an XGBoost model on the training data
+xgb_model <- xgboost(data = as.matrix(train_data[, c("Avg.Temp.C", "Min.Temp.C")]), 
+                     label = train_data$Lst, 
+                     objective = "reg:squarederror", nrounds = 100)
+
+# Create a new dataset with predictions from the three models on the testing set
+predictions <- data.frame(
+  Actual = test_data$Lst,
+  RandomForest_Pred = predict(rf_model, newdata = test_data),
+  SVM_Pred = predict(svm_model, newdata = test_data),
+  XGBoost_Pred = predict(xgb_model, as.matrix(test_data[, c("Avg.Temp.C", "Min.Temp.C")]))
+)
+
+# Create separate density plots for Actual vs. Predictions for each model
+plot_actual_rf <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
+  labs(title = "Actual vs. Random Forest",
+       x = "Values",
+       y = "Density")
+
+plot_actual_svm <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = SVM_Pred), fill = "red", alpha = 0.5) +
+  labs(title = "Actual vs. SVM",
+       x = "Values",
+       y = "Density")
+
+plot_actual_xgb <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = XGBoost_Pred), fill = "purple", alpha = 0.5) +
+  labs(title = "Actual vs. XGBoost",
+       x = "Values",
+       y = "Density")
+
+# Display the plots
+library(gridExtra)
+grid.arrange(plot_actual_rf, plot_actual_svm, plot_actual_xgb, 
+             ncol = 2, nrow = 2)
+
+```
+
+```{r}
+# Calculate R-squared for each model
+rf_r_squared <- 1 - (sum((test_data$Lst - predictions$RandomForest_Pred)^2) / sum((test_data$Lst - mean(test_data$Lst))^2))
+svm_r_squared <- 1 - (sum((test_data$Lst - predictions$SVM_Pred)^2) / sum((test_data$Lst - mean(test_data$Lst))^2))
+xgb_r_squared <- 1 - (sum((test_data$Lst - predictions$XGBoost_Pred)^2) / sum((test_data$Lst - mean(test_data$Lst))^2))
+
+cat("R-squared for Random Forest model:", round(rf_r_squared, 3), "\n")
+cat("R-squared for SVM model:", round(svm_r_squared, 3), "\n")
+cat("R-squared for XGBoost model:", round(xgb_r_squared, 3), "\n")
+```
+
+```{r}
+library(dplyr)
+final_data = read.csv("final_data.csv")
+#final_data = final_data %>% filter(Lst > 20) 
+
+
+```
+
+
+```{r}
+library(randomForest)
+library(e1071)
+library(xgboost)
+library(ggplot2)
+
+# Load your dataset (replace 'your_data' with your actual dataset)
+# Example: final_data <- read.csv("your_data.csv")
+
+# Split the dataset into training and testing sets (e.g., 80% training, 20% testing)
+set.seed(123)  # for reproducibility
+sample_indices <- sample(1:nrow(final_data), 0.7 * nrow(final_data))
+train_data <- final_data[sample_indices, ]
+test_data <- final_data[-sample_indices, ]
+
+# Fit a Random Forest model on the training data
+rf_model <- randomForest(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit a Support Vector Machine (SVM) model on the training data
+svm_model <- svm(Lst ~ Avg.Temp.C + Min.Temp.C, data = train_data)
+
+# Fit an XGBoost model on the training data
+xgb_model <- xgboost(data = as.matrix(train_data[, c("Avg.Temp.C", "Min.Temp.C")]), 
+                     label = train_data$Lst, 
+                     objective = "reg:squarederror", nrounds = 100)
+
+# Create a new dataset with predictions from the three models on the testing set
+predictions <- data.frame(
+  Actual = test_data$Lst,
+  RandomForest_Pred = predict(rf_model, newdata = test_data),
+  SVM_Pred = predict(svm_model, newdata = test_data),
+  XGBoost_Pred = predict(xgb_model, as.matrix(test_data[, c("Avg.Temp.C", "Min.Temp.C")]))
+)
+
+# Create separate density plots for Actual vs. Predictions for each model
+plot_actual_rf <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
+  labs(title = "Actual vs. Random Forest",
+       x = "Values",
+       y = "Density")
+
+plot_actual_svm <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = SVM_Pred), fill = "red", alpha = 0.5) +
+  labs(title = "Actual vs. SVM",
+       x = "Values",
+       y = "Density")
+
+plot_actual_xgb <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = XGBoost_Pred), fill = "purple", alpha = 0.5) +
+  labs(title = "Actual vs. XGBoost",
+       x = "Values",
+       y = "Density")
+
+# Display the plots
+library(gridExtra)
+grid.arrange(plot_actual_rf, plot_actual_svm, plot_actual_xgb, 
+             ncol = 2, nrow = 2)
+
+```
+
+
+
+
+
+```{r}
+library(dplyr)
+final_data = read.csv("final_data.csv")
+final_data = final_data %>% filter(Lst > 20)
+
+final_data <- final_data %>%
+  group_by(Lst) %>%
+  summarize(
+    Max.Temp.C = mean(Max.Temp.C, na.rm = TRUE),
+    Min.Temp.C = mean(Min.Temp.C, na.rm = TRUE),
+    Precipitation = mean(Precipitation, na.rm = TRUE),
+    Avg.Temp.C = mean(Avg.Temp.C)
+  )
+
+
+
+
+```
+
+
+```{r}
+library(randomForest)
+
+# Load your dataset (replace 'your_data' with your actual dataset)
+# Example: final_data <- read.csv("your_data.csv")
+
+# Split the dataset into training and testing sets (e.g., 80% training, 20% testing)
+set.seed(123)  # for reproducibility
+sample_indices <- sample(1:nrow(final_data), 0.75 * nrow(final_data))
+train_data <- final_data[sample_indices, ]
+test_data <- final_data[-sample_indices, ]
+
+# Fit a Random Forest model on the training data
+rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C, data = train_data)
+
+# Make predictions on the testing set
+rf_predictions <- predict(rf_model, newdata = test_data)
+
+# Calculate the mean of the observed values
+mean_observed <- mean(test_data$Lst)
+
+# Calculate the total sum of squares (TSS)
+tss <- sum((test_data$Lst - mean_observed)^2)
+
+# Calculate the residual sum of squares (RSS)
+rss <- sum((test_data$Lst - rf_predictions)^2)
+
+# Calculate R-squared
+rsquared <- 1 - (rss / tss)
+cat("R-squared:", rsquared, "\n")
+
+# Create a new dataset with predictions from the Random Forest model on the testing set
+predictions <- data.frame(
+  Actual = test_data$Lst,
+  RandomForest_Pred = rf_predictions
+)
+
+# Create a density plot for Actual vs. Random Forest predictions
+library(ggplot2)
+plot_actual_rf <- ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
+  labs(title = "Actual vs. Random Forest",
+       x = "Values",
+       y = "Density")
+
+# Display the plot
+print(plot_actual_rf)
+
+```
+
+```{r}
+library(vip)
+
+# Calculate permutation importance for the Random Forest model
+rf_perm_importance <- vip(rf_model)
+
+# View the results
+print(rf_perm_importance)
+```
+
+
+```{r}
+# Create a dataframe with actual and predicted values
+plot_data <- data.frame(
+  Actual = test_data$Lst,
+  Predicted = rf_predictions
+)
+
+# Load the ggplot2 library if not already loaded
+library(ggplot2)
+
+# Create a scatter plot with a trend line
+plot_predicted_actual <- ggplot(plot_data, aes(x = Actual, y = Predicted)) +
+  geom_point() +                 # Scatter plot points
+  geom_smooth(method = "lm",     # Add a linear trend line
+              color = "red",     # Line color
+              se = FALSE) +      # Don't show confidence interval
+  labs(title = "Predicted vs. Actual",
+       x = "Actual",
+       y = "Predicted")
+
+# Display the plot
+print(plot_predicted_actual)
+
+```
+
+```{r}
+# Create a dataframe with actual and predicted values
+plot_data <- data.frame(
+  Actual = test_data$Lst,
+  Predicted = rf_predictions
+)
+
+# Load the ggplot2 library if not already loaded
+library(ggplot2)
+
+# Create a scatter plot with a trend line, add more details
+plot_predicted_actual <- ggplot(plot_data, aes(x = Actual, y = Predicted)) +
+  geom_point(aes(color = abs(Actual - Predicted)), size = 3, alpha = 0.7) +  # Color points by error
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Add a linear trend line
+  labs(title = "Predicted vs. Actual",
+       x = "Actual",
+       y = "Predicted") +
+  theme_minimal() +  # Minimalist theme
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "blue") +  # Add y=x line
+  scale_color_gradient(low = "green", high = "red", name = "Error (abs)") +  # Color scale legend
+  geom_text(aes(label = rownames(plot_data)), hjust = -0.2, vjust = 0.2, size = 2) +  # Add data point labels
+  theme(legend.position = "bottom")  # Adjust legend position
+
+# Display the plot
+print(plot_predicted_actual)
+
+```
+
+```{r}
+# Create a dataframe with actual and predicted values
+plot_data <- data.frame(
+  Actual = test_data$Lst,
+  Predicted = rf_predictions
+)
+
+# Load the ggplot2 library if not already loaded
+library(ggplot2)
+
+# Create a scatter plot with a trend line, add more details
+plot_predicted_actual <- ggplot(plot_data, aes(x = Actual, y = Predicted)) +
+  geom_point(aes(color = abs(Actual - Predicted)), size = 3, alpha = 0.7) +  # Color points by error
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Add a linear trend line
+  labs(title = "Predicted vs. Actual",
+       x = "Actual",
+       y = "Predicted") +
+  theme_minimal() +  # Minimalist theme
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "blue") +  # Add y=x line
+  scale_color_gradient(low = "green", high = "red", name = "Error (abs)") +  # Color scale legend
+  geom_text(aes(label = rownames(plot_data)), hjust = -0.2, vjust = 0.2, size = 2) +  # Add data point labels
+  theme(legend.position = "bottom") +  # Adjust legend position
+  annotate("text", x = 30, y = 45, label = "Red Line: Linear Trend Line", size = 3, color = "red") +  # Explanation for red line
+  annotate("text", x = 30, y = 30, label = "Blue Line: Perfect Predictions (y=x)", size = 3, color = "blue")  # Explanation for blue line
+
+# Display the plot
+print(plot_predicted_actual)
+
+```
+

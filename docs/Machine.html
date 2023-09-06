@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Investigating Correlations</title>
+<title>machine</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Investigating Correlations</h1>
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -240,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Correlations.html" class="sidebar-item-text sidebar-link active">Investigating Correlations</a>
+  <a href="./Correlations.html" class="sidebar-item-text sidebar-link">Investigating Correlations</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -277,77 +277,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block">Investigating Correlations</h1>
-</div>
 
-
-
-<div class="quarto-title-meta">
-
-    
-    
-  </div>
-  
-
-</header>
 
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>summer_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"summer_data.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'randomForest' was built under R version 4.2.3</code></pre>
 </div>
-<p>In order to perform correlation tests between the LST data and data from weather stations, a Shapiro normality test needs to be conducted to determine the appropriate method for the correlation tests.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>shapiro_results <span class="ot">&lt;-</span> summer_data <span class="sc">%&gt;%</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(Lst,Precipitation,Max.Temp.C,Min.Temp.C,Avg.Temp.C) <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(<span class="fu">list</span>(<span class="at">p_value =</span> <span class="sc">~</span><span class="fu">shapiro.test</span>(.)<span class="sc">$</span>p.value))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(shapiro_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>randomForest 4.7-1.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'e1071' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'xgboost' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggplot2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:randomForest':
+
+    margin</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your dataset (replace 'your_data' with your actual dataset)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: summer_data &lt;- read.csv("your_data.csv")</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Random Forest model</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Lst <span class="sc">~</span> Avg.Temp.C <span class="sc">+</span> Min.Temp.C, <span class="at">data =</span> summer_data)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Support Vector Machine (SVM) model using the e1071 package</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm</span>(Lst <span class="sc">~</span> Avg.Temp.C <span class="sc">+</span> Min.Temp.C, <span class="at">data =</span> summer_data)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit an XGBoost model</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(summer_data[, <span class="fu">c</span>(<span class="st">"Avg.Temp.C"</span>, <span class="st">"Min.Temp.C"</span>)]), </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> summer_data<span class="sc">$</span>Lst, </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">objective =</span> <span class="st">"reg:squarederror"</span>, <span class="at">nrounds =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1
-Columns: 5
-$ Lst_p_value           &lt;dbl&gt; 0.05067797
-$ Precipitation_p_value &lt;dbl&gt; 0.3206028
-$ Max.Temp.C_p_value    &lt;dbl&gt; 0.2804596
-$ Min.Temp.C_p_value    &lt;dbl&gt; 0.008113413
-$ Avg.Temp.C_p_value    &lt;dbl&gt; 0.03798488</code></pre>
+<pre><code>[1] train-rmse:27.953901 
+[2] train-rmse:20.038160 
+[3] train-rmse:14.452481 
+[4] train-rmse:10.548952 
+[5] train-rmse:7.851009 
+[6] train-rmse:5.867752 
+[7] train-rmse:4.461927 
+[8] train-rmse:3.487385 
+[9] train-rmse:2.804483 
+[10]    train-rmse:2.260476 
+[11]    train-rmse:1.868209 
+[12]    train-rmse:1.571221 
+[13]    train-rmse:1.358508 
+[14]    train-rmse:1.178783 
+[15]    train-rmse:1.012746 
+[16]    train-rmse:0.872232 
+[17]    train-rmse:0.774190 
+[18]    train-rmse:0.675167 
+[19]    train-rmse:0.609960 
+[20]    train-rmse:0.534567 
+[21]    train-rmse:0.467033 
+[22]    train-rmse:0.412710 
+[23]    train-rmse:0.371853 
+[24]    train-rmse:0.331187 
+[25]    train-rmse:0.302843 
+[26]    train-rmse:0.270692 
+[27]    train-rmse:0.240539 
+[28]    train-rmse:0.215396 
+[29]    train-rmse:0.195199 
+[30]    train-rmse:0.176390 
+[31]    train-rmse:0.156817 
+[32]    train-rmse:0.134670 
+[33]    train-rmse:0.116078 
+[34]    train-rmse:0.100507 
+[35]    train-rmse:0.087555 
+[36]    train-rmse:0.076768 
+[37]    train-rmse:0.068817 
+[38]    train-rmse:0.062695 
+[39]    train-rmse:0.057158 
+[40]    train-rmse:0.053980 
+[41]    train-rmse:0.049469 
+[42]    train-rmse:0.044766 
+[43]    train-rmse:0.041290 
+[44]    train-rmse:0.038951 
+[45]    train-rmse:0.035218 
+[46]    train-rmse:0.032298 
+[47]    train-rmse:0.029613 
+[48]    train-rmse:0.027188 
+[49]    train-rmse:0.025078 
+[50]    train-rmse:0.022451 
+[51]    train-rmse:0.020174 
+[52]    train-rmse:0.018390 
+[53]    train-rmse:0.017001 
+[54]    train-rmse:0.015288 
+[55]    train-rmse:0.013500 
+[56]    train-rmse:0.012279 
+[57]    train-rmse:0.011034 
+[58]    train-rmse:0.009757 
+[59]    train-rmse:0.008857 
+[60]    train-rmse:0.008225 
+[61]    train-rmse:0.007401 
+[62]    train-rmse:0.006708 
+[63]    train-rmse:0.006047 
+[64]    train-rmse:0.005682 
+[65]    train-rmse:0.005363 
+[66]    train-rmse:0.004845 
+[67]    train-rmse:0.004580 
+[68]    train-rmse:0.004145 
+[69]    train-rmse:0.003922 
+[70]    train-rmse:0.003555 
+[71]    train-rmse:0.003263 
+[72]    train-rmse:0.002958 
+[73]    train-rmse:0.002723 
+[74]    train-rmse:0.002484 
+[75]    train-rmse:0.002279 
+[76]    train-rmse:0.002151 
+[77]    train-rmse:0.001993 
+[78]    train-rmse:0.001914 
+[79]    train-rmse:0.001736 
+[80]    train-rmse:0.001641 
+[81]    train-rmse:0.001493 
+[82]    train-rmse:0.001480 
+[83]    train-rmse:0.001480 
+[84]    train-rmse:0.001480 
+[85]    train-rmse:0.001480 
+[86]    train-rmse:0.001480 
+[87]    train-rmse:0.001480 
+[88]    train-rmse:0.001480 
+[89]    train-rmse:0.001480 
+[90]    train-rmse:0.001480 
+[91]    train-rmse:0.001481 
+[92]    train-rmse:0.001481 
+[93]    train-rmse:0.001481 
+[94]    train-rmse:0.001481 
+[95]    train-rmse:0.001481 
+[96]    train-rmse:0.001481 
+[97]    train-rmse:0.001481 
+[98]    train-rmse:0.001481 
+[99]    train-rmse:0.001481 
+[100]   train-rmse:0.001482 </code></pre>
 </div>
-</div>
-<p>From the normality test results, it was found that the average and the minimum temperatures aren’t normally distributed. In light of that, all the correlation tests will be done with the “Kendall” method to simplify the statical calculations.</p>
-<hr>
-<p>Based on the plot results interpretation, it can be concluded that there exists a low to medium significant positive correlation between the Lst and Temperature variables. On the other hand, the correlation between Lst and Precipitation is negligible and insignificant. Considering these findings alongside the normal distribution of Lst values, a standard linear model will be conducted for further analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>create_scatter_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x_var, y_var, x_label, y_label, plot_color, header) {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  correlation_result <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(data[[x_var]], data[[y_var]], <span class="at">method =</span> <span class="st">"kendall"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[x_var]], <span class="at">y =</span> .data[[y_var]])) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">color =</span> plot_color, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"#d62728"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Corr ="</span>, <span class="fu">round</span>(correlation_result<span class="sc">$</span>estimate, <span class="dv">2</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"p ="</span>, <span class="fu">signif</span>(correlation_result<span class="sc">$</span>p.value, <span class="at">digits =</span> <span class="dv">3</span>))),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"#d62728"</span>) <span class="sc">+</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> x_label, <span class="at">y =</span> y_label, <span class="at">title =</span> header) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(plot)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Avg.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Avg Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#1f77b4"</span>, <span class="st">"Avg Temp C vs. LST"</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Min.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Min Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#800080"</span>, <span class="st">"Min Temp C vs. LST"</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Max.Temp.C"</span>, <span class="st">"Lst"</span>, <span class="st">"Max Temp C"</span>, <span class="st">"LST"</span>, <span class="st">"#2ca02c"</span>, <span class="st">"Max Temp C vs. LST"</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">&lt;-</span> <span class="fu">create_scatter_plot</span>(summer_data, <span class="st">"Precipitation"</span>, <span class="st">"Lst"</span>, <span class="st">"Precipitation"</span>, <span class="st">"LST"</span>, <span class="st">"#000000"</span>, <span class="st">"Precipitation vs. LST"</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>combined_plots <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(plot1, plot2, plot3, plot4, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>combined_plots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new dataset with predictions from the three models</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Actual =</span> summer_data<span class="sc">$</span>Lst,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">RandomForest_Pred =</span> <span class="fu">predict</span>(rf_model, summer_data),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">SVM_Pred =</span> <span class="fu">predict</span>(svm_model, summer_data),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">XGBoost_Pred =</span> <span class="fu">predict</span>(xgb_model, <span class="fu">as.matrix</span>(summer_data[, <span class="fu">c</span>(<span class="st">"Avg.Temp.C"</span>, <span class="st">"Min.Temp.C"</span>)]))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a density plot of the model predictions</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predictions, <span class="fu">aes</span>(<span class="at">x =</span> Actual)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">"Actual"</span>), <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> RandomForest_Pred, <span class="at">fill =</span> <span class="st">"RandomForest"</span>), <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> SVM_Pred, <span class="at">fill =</span> <span class="st">"SVM"</span>), <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> XGBoost_Pred, <span class="at">fill =</span> <span class="st">"XGBoost"</span>), <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Density Plot of Model Predictions"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Predicted Lst"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Actual"</span> <span class="ot">=</span> <span class="st">"pink"</span>, </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"RandomForest"</span> <span class="ot">=</span> <span class="st">"green"</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"SVM"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"XGBoost"</span> <span class="ot">=</span> <span class="st">"yellow"</span>)) <span class="sc">+</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Correlations_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Machine_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

@@ -1,0 +1,78 @@
+---
+title: "Assumptions of Multiple Linear Regression"
+---
+
+Once a regression model has been created, it is important to check the assumptions of multiple linear regression. These assumptions provide the foundation for the model's results and conclusions. If these assumptions are violated, the predictions may be inaccurate, the interpretations misleading, and the conclusions flawed.
+
+The assumptions include:
+
+1.  Linearity: There must be a linear relationship between the dependent variable and its explanatory variables.
+
+2.  Independence: The explanatory variables should not be highly correlated with each other.
+
+3.  Normal distribution: The residuals should be normally distributed.
+
+4.  Homoscedasticity: The residuals should have equal variance.
+
+```{r,message=FALSE,warning=FALSE,results='hide',echo=FALSE}
+
+summer_data = read.csv("summer_data.csv")
+library(stats)
+model = lm(Lst ~ Avg.Temp.C + Min.Temp.C + Max.Temp.C, data = summer_data)
+model = stats::step(model)
+
+```
+
+------------------------------------------------------------------------
+
+***Linearity:***
+
+From the plot, it seems that there is a nearly linear line that validates the linearity assumption.
+
+```{r}
+plot(model,1)
+```
+
+------------------------------------------------------------------------
+
+***Independence:***
+
+There is a strong correlation between the explanatory variables. In such a case, the model can be used for prediction but not for measuring the influence of the explanatory variables on LST.
+
+```{r,message=FALSE,warning=FALSE}
+library(Kendall)
+independent_vars <- summer_data[, c("Avg.Temp.C", "Min.Temp.C")]
+cor_matrix <- cor(as.matrix(independent_vars), method = "kendall")
+print(cor_matrix)
+```
+
+------------------------------------------------------------------------
+
+***Normal distribution:***
+
+The Shapiro test result and the QQ - Plot validate the normal distribution assumption.
+
+```{r,warning=FALSE,message=FALSE}
+library(car)
+qqPlot(residuals(model))
+shapiro.test(residuals(model))
+```
+
+------------------------------------------------------------------------
+
+***Homoscedasticity:***
+
+In the Residuals vs. Fitted plot, there is some suspicion of heteroscedasticity; a sort of asymmetrical shape appears. In addition, the ncvTest shows a low P value value below 0.05; the low value means a lack of homoscedasticity. Uneven variances in samples result in biased and skewed test results.
+
+```{r}
+ncvTest(model)
+```
+
+```{r}
+plot(model,3)
+
+```
+
+------------------------------------------------------------------------
+
+In summary, the model meets linearity and normal distribution assumptions but violates independence and homoscedasticity assumptions. However, as George E. P. Box famously said, "All models are wrong, but some are useful." (Box, G. E, 1976)

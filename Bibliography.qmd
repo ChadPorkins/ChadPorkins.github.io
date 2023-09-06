@@ -1,5 +1,7 @@
 articles:
 
+Box, G. E. (1976). Science and statistics. *Journal of the American Statistical Association*, *71*(356), 791-799.‏
+
 USGS. (n.d.). Landsat 8. https://www.usgs.gov/landsat-missions/landsat-8
 
 Wang, T., Shi, J., Ma, Y., Husi, L., Comyn‐Platt, E., Ji, D., \... & Xiong, C. (2019). Recovering land surface temperature under cloudy skies considering the solar‐cloud‐satellite geometry: Application to MODIS and Landsat‐8 data. *Journal of Geophysical Research: Atmospheres*, *124*(6), 3401-3416.‏
