@@ -1,0 +1,61 @@
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+final_data = read.csv("final_data.csv")
+```
+
+
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+library(dplyr)
+
+final_data <- final_data %>%
+  filter(Lst > 20) %>%
+  group_by(Lst) %>%
+  summarize(
+    Max.Temp.C = mean(Max.Temp.C),
+    Min.Temp.C = mean(Min.Temp.C),
+    Precipitation = mean(Precipitation),
+    Avg.Temp.C = mean(Avg.Temp.C)
+  )
+
+```
+
+
+
+
+
+
+
+```{r,eval=FALSE}
+library(randomForest)
+library(tidyverse)
+
+
+set.seed(337)
+rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C + Max.Temp.C, data = train_data)
+
+ggplot(predictions, aes(x = Actual)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
+  labs(title = "Actual vs. Random Forest",
+       x = "Values",
+       y = "Density")
+
+```
+
+```{r,eval=FALSE}
+ggplot(plot_data, aes(x = Actual, y = Predicted)) +
+  geom_point(aes(color = abs(Actual - Predicted)), size = 3, alpha = 0.7) +  # Color points by error
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Add a linear trend line
+  labs(title = "Predicted vs. Actual",
+       x = "Actual",
+       y = "Predicted") +
+  theme_minimal() +  # Minimalist theme
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "blue") +  # Add y=x line
+  scale_color_gradient(low = "green", high = "red", name = "Error (abs)") +  # Color scale legend
+  geom_text(aes(label = rownames(plot_data)), hjust = -0.2, vjust = 0.2, size = 2) +  # Add data point labels
+  theme(legend.position = "bottom") +  # Adjust legend position
+  annotate("text", x = 30, y = 45, label = "Red Line: Linear Trend Line", size = 3, color = "red") +  # Explanation for red line
+  annotate("text", x = 30, y = 30, label = "Blue Line: Perfect Predictions (y=x)", size = 3, color = "blue")  # Explanation for blue line
+```
+

@@ -32,10 +32,10 @@ website:
           - Correlations.qmd
           - Regression.qmd
           - Assumptions.qmd
-      - section: "Time Series Analysis"
-      - section: "Data Integration and Joins"
-      - section: "Data Integration and Joins"
-      - section: "Statistical Methods"
+      - section: "Machine Learning Regression"
+        contents: 
+          - Machine_Learning.qmd
+          - Machine_Learning_Plots.qmd
 
           
 format:

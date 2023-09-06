@@ -26,12 +26,3 @@ The coefficients for "Avg.Temp.C" and "Min.Temp.C" are statistically significant
 summary(model)
 ```
 
-```{r}
-library(ggplot2)
-ggplot(summer_data, aes(x = fitted(model), y = residuals(model))) +
-  geom_point() +
-  geom_smooth(method = "loess", color = "blue") +
-  labs(x = "Fitted Values", y = "Residuals") +
-  ggtitle("Linearity Check")
-```
-

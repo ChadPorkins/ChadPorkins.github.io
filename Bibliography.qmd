@@ -1,5 +1,7 @@
 articles:
 
+Boehmke. (n.d.). Random Forests. University of Cincinnati Business Analytics R Programming Guide. https://uc-r.github.io/random_forests
+
 Box, G. E. (1976). Science and statistics. *Journal of the American Statistical Association*, *71*(356), 791-799.‏
 
 USGS. (n.d.). Landsat 8. https://www.usgs.gov/landsat-missions/landsat-8
