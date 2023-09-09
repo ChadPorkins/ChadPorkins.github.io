@@ -36,8 +36,10 @@ website:
         contents: 
           - Machine_Learning.qmd
           - Machine_Learning_Plots.qmd
+      - section: "Time Series Forecasting"
+        contents: 
+          - Prophet.qmd
 
-          
 format:
   html:
     theme: flatly

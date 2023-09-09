@@ -54,11 +54,11 @@ library(dplyr)
 library(purrr)
 
 
-calculate_rsquared <- function(seed, data) {
+rf_function <- function(seed, data) {
   set.seed(seed)  
-  sample_indices <- sample(1:nrow(data), 0.75 * nrow(data))
-  train_data <- data[sample_indices, ]
-  test_data <- data[-sample_indices, ]
+  rf_sample <- sample(1:nrow(data), 0.75 * nrow(data))
+  train_data <- data[rf_sample, ]
+  test_data <- data[-rf_sample, ]
   
 rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C + Max.Temp.C, data = train_data)
   
@@ -75,7 +75,7 @@ return(rsquared)
 num_iterations <- 999
 
 results <- 1:num_iterations %>%
-  map_dbl(~ calculate_rsquared(.x, final_data))
+  map_dbl(~ rf_function(.x, final_data))
 
 loop_results <- data.frame(
   best_seed = which.max(results),
@@ -93,3 +93,4 @@ loop_results %>%
 #$ average_rsquared <dbl> 0.469881
 
 ```
+

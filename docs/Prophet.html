@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Random forest regression</title>
+<title>Propheat Forcasting Procedure</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Random forest regression</h1>
+      <h1 class="quarto-secondary-nav-title">Propheat Forcasting Procedure</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Machine_Learning.html" class="sidebar-item-text sidebar-link active">Random forest regression</a>
+  <a href="./Machine_Learning.html" class="sidebar-item-text sidebar-link">Random forest regression</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Prophet.html" class="sidebar-item-text sidebar-link">Propheat</a>
+  <a href="./Prophet.html" class="sidebar-item-text sidebar-link active">Propheat Forcasting Procedure</a>
   </div>
 </li>
       </ul>
@@ -302,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Random forest regression</h1>
+<h1 class="title d-none d-lg-block">Propheat Forcasting Procedure</h1>
 </div>
 
 
@@ -316,86 +316,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Random forest regression is a machine learning technique that improves the predictive accuracy of decision tree models. It is beneficial in cases where a single decision tree model shows high variance and poor predictive accuracy. The random forest technique addresses the issue of tree correlation present in bagging techniques by introducing more randomness during the tree-building process. As a result, Random Forest exhibits reduced variance and improved predictive accuracy compared to individual trees. (Boehmke, (n.d.))</p>
-<p>In regression analysis, data aggregation was used to simplify and facilitate the process to achieve higher data accuracy. However, machine learning requires a large number of observations and values to train Random Forest and obtain high accuracy. To achieve this, it is crucial to focus on the data frame before aggregation (final_data) and ensure that each LST value is unique, without any duplications that may harm the training quality of the machine. To accomplish this, the following code calculates the average of the data in rows where LST values are duplicated.</p>
-<div class="cell">
-
-</div>
+<p>Forecasting is a common data science task that helps with prediction, planning, goal setting, and anomaly detection. However, producing reliable and high-quality forecasts can be challenging, especially when dealing with a wide range of time series and a shortage of experts in time series modeling. To overcome these challenges, Facebook scientists developed the Prophet forecast procedure. (Taylor &amp; Letham, (2018))</p>
+<p>Prophet is a powerful tool for forecasting time series data. It employs an additive model that captures non-linear trends, yearly, weekly, and daily seasonality, and holiday effects. It is particularly well-suited for time series data with strong seasonal effects and a significant amount of historical data. With Prophet, you can easily obtain accurate forecasts without needing manual adjustments, even when dealing with messy data. It can easily handle outliers, missing data, and sudden changes in your time series, making it an excellent choice for time series forecasting. (Facebook Open Source, (n.d.))</p>
+<p>For this seminar research, the Prophet forecasting procedure was chosen due to its simplicity and flexibility in handling data, as well as the noticeable improvement that was achieved in nonlinear regression by using random forest. Despite gaps in the data between years and repeated values for each month from multiple synthetic turf fields, the Prophet model can still accurately predict future LST values.</p>
+<hr>
+<p>For the Prophet forecast procedure to function accurately, it is necessary that the “final_data” data frame is loaded properly, excluding any outliers. Furthermore, a new data frame has been created to include future dates of the summer months in the next decade. Since the training data used for the Prophet forecast procedure spans a decade, it is reasonable to predict the following decade.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lst <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Lst) <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max.Temp.C =</span> <span class="fu">mean</span>(Max.Temp.C),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min.Temp.C =</span> <span class="fu">mean</span>(Min.Temp.C),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Precipitation =</span> <span class="fu">mean</span>(Precipitation),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Avg.Temp.C =</span> <span class="fu">mean</span>(Avg.Temp.C)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(prophet)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"final_data.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lst <span class="sc">&gt;</span> <span class="dv">20</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>future_dates_jja <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ds =</span> <span class="fu">as.Date</span>(<span class="fu">paste0</span>(<span class="fu">rep</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2033</span>, <span class="at">each =</span> <span class="dv">1</span>), <span class="st">"-"</span>, <span class="fu">rep</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">11</span>), <span class="st">"-01"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ds)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>prophet_data <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">ds =</span> Date, <span class="at">y =</span> Lst)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>prophet_model <span class="ot">&lt;-</span> <span class="fu">prophet</span>(prophet_data)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>summer_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(prophet_model, future_dates_jja)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p>Compared to linear regression, the random forest method can identify essential variables based on their predictive power, even if they do not meet the assumptions of linear regression or have high p-values in the original linear model. The VIP package can be used to check which variables are best for the machine learning process and to see each variable’s importance score. In this case, temperature variables have a high importance score and will be used in the random model.</p>
+<p>Based on the plot, it is evident that the synthetic turf fields will experience a rise in temperature during the future summer months. The lowest predicted temperature for these fields is 37.34 degrees Celsius, while the highest predicted temperature is 50.35 degrees Celsius.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>vip_rf_model <span class="ot">&lt;-</span> final_data <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">randomForest</span>(Lst <span class="sc">~</span> Avg.Temp.C <span class="sc">+</span> Min.Temp.C <span class="sc">+</span> Max.Temp.C <span class="sc">+</span> Precipitation, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">vip</span>()</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>summer_prediction<span class="sc">$</span>ds <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(summer_prediction<span class="sc">$</span>ds)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>lowest_value <span class="ot">&lt;-</span> summer_prediction <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yhat <span class="sc">==</span> <span class="fu">min</span>(yhat))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>highest_value <span class="ot">&lt;-</span> summer_prediction <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yhat <span class="sc">==</span> <span class="fu">max</span>(yhat))</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>vip_rf_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> summer_prediction, <span class="fu">aes</span>(<span class="at">x =</span> ds, <span class="at">y =</span> yhat)) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"gold"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"yhat (Forecasted Value)"</span>, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Prophet Forecasted Values with Smooth Line"</span>) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 year"</span>, <span class="at">date_labels =</span> <span class="st">"%Y"</span>) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> lowest_value, <span class="fu">aes</span>(<span class="at">x =</span> ds, <span class="at">y =</span> <span class="fu">min</span>(yhat) <span class="sc">-</span> <span class="dv">2</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Lowest:"</span>, <span class="fu">round</span>(yhat,<span class="dv">2</span>))), <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> highest_value, <span class="fu">aes</span>(<span class="at">x =</span> ds, <span class="at">y =</span> <span class="fu">min</span>(yhat) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Highest:"</span>, <span class="fu">round</span>(yhat,<span class="dv">2</span>))), <span class="at">hjust =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Machine_Learning_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Prophet_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
-<p>To evaluate the performance of a machine learning model, the data was divided into two sets - a training set and a test set. The training set was used to train the model by allowing it to identify patterns and relationships in the data. The test set was then used to assess how accurately the model performs on new data.</p>
-<p>The ultimate goal of a machine learning model is to make accurate predictions on new data that it has not seen before. However, the training results may reveal if the model becomes too specialized and overfits, resulting in poor performance on new data. To prevent this, the model was run 999 times to get a more accurate estimate of its performance. In each run, the R-squared values of the predictions in relation to the test data were checked.</p>
-<p>It was found that the Random Forest model had an average R squared value of 0.47, with a maximum value of 0.55. This indicates an improvement in variance explanation of 7% and a 15% improvement relative to the linear model.</p>
+<p>The second plot shows a predicted rise in temperature during the upcoming summer months, which is in line with the trend shown in the first plot. Additionally, the plot displays a range of values in light blue that represent the confidence interval within which the predicted temperatures are expected to fall. According to the Prophet forecast procedure, there is a probability that the synthetic turf fields could reach a high temperature of approximately 50 to 70 degrees Celsius within the confidence interval in the next decade.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>rf_function <span class="ot">&lt;-</span> <span class="cf">function</span>(seed, data) {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  rf_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">nrow</span>(data))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> data[rf_sample, ]</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>rf_sample, ]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Lst <span class="sc">~</span> Min.Temp.C <span class="sc">+</span> Avg.Temp.C <span class="sc">+</span> Max.Temp.C, <span class="at">data =</span> train_data)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> test_data)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>mean_observed <span class="ot">&lt;-</span> <span class="fu">mean</span>(test_data<span class="sc">$</span>Lst)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>tss <span class="ot">&lt;-</span> <span class="fu">sum</span>((test_data<span class="sc">$</span>Lst <span class="sc">-</span> mean_observed)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>rss <span class="ot">&lt;-</span> <span class="fu">sum</span>((test_data<span class="sc">$</span>Lst <span class="sc">-</span> rf_predictions)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>rsquared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (rss <span class="sc">/</span> tss)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(rsquared)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>num_iterations <span class="ot">&lt;-</span> <span class="dv">999</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>num_iterations <span class="sc">%&gt;%</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span> <span class="fu">rf_function</span>(.x, final_data))</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>loop_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">best_seed =</span> <span class="fu">which.max</span>(results),</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">best_rsquared =</span> <span class="fu">max</span>(results),</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_rsquared =</span> <span class="fu">min</span>(results),</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">average_rsquared =</span> <span class="fu">mean</span>(results)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>loop_results <span class="sc">%&gt;%</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">#$ best_seed        &lt;int&gt; 337</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#$ best_rsquared    &lt;dbl&gt; 0.5576459</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#$ min_rsquared     &lt;dbl&gt; 0.3624118</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#$ average_rsquared &lt;dbl&gt; 0.469881</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prophet_model,summer_prediction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Prophet_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 

@@ -1,9 +1,14 @@
+---
+title: "Random forest regression plots"
+---
+
+After creating the Random Forest model with the highest R-squared value, with a seed value of 334, it is possible to draw meaningful conclusions from the following two plots.
+
+After analyzing the density plot, it becomes evident that the random forest model prediction values fail to predict low Land Surface Temperature (LST) values around the low 20 values. The first predicted value by the random forest is approximately 27 degrees Celsius. The random forest model initially underestimates the actual LST values until around 29 degrees Celsius, where there is a slight overestimation of values that later returns to underestimation. The random forest model doesn't predict very high LST values around the 50 degrees Celsius mark but instead overestimates the LST values around the 40 degrees Celsius mark.
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 final_data = read.csv("final_data.csv")
 ```
-
-
 
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(dplyr)
@@ -20,42 +25,51 @@ final_data <- final_data %>%
 
 ```
 
-
-
-
-
-
-
-```{r,eval=FALSE}
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
 library(randomForest)
-library(tidyverse)
-
-
+library(ggplot2)
 set.seed(337)
-rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C + Max.Temp.C, data = train_data)
+rf_sample <- sample(1:nrow(final_data), 0.75 * nrow(final_data))
+train_data <- final_data[rf_sample, ]
+test_data <- final_data[-rf_sample, ]
+rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C, data = train_data)
+rf_predictions <- predict(rf_model, newdata = test_data)
+```
 
-ggplot(predictions, aes(x = Actual)) +
-  geom_density(fill = "blue", alpha = 0.5) +
-  geom_density(aes(x = RandomForest_Pred), fill = "green", alpha = 0.5) +
-  labs(title = "Actual vs. Random Forest",
+```{r,warning=FALSE,message=FALSE}
+library(ggplot2)
+
+predictions <- data.frame(
+  Actual_Values = test_data$Lst,
+  Prediction_Values = rf_predictions
+)
+
+ggplot(predictions, aes(x = Actual_Values)) +
+  geom_density(aes(fill = "Actual Values"), alpha = 0.5) +
+  geom_density(aes(x = Prediction_Values, fill = "Random Forest Values"), alpha = 0.5) +
+  labs(title = "Actual Values vs. Random Forest Values",
        x = "Values",
-       y = "Density")
+       y = "Density") +
+  scale_fill_manual(values = c("Actual Values" = "red", "Random Forest Values" = "green")) +
+  guides(fill = guide_legend(title = "Legend"))
 
 ```
 
-```{r,eval=FALSE}
-ggplot(plot_data, aes(x = Actual, y = Predicted)) +
-  geom_point(aes(color = abs(Actual - Predicted)), size = 3, alpha = 0.7) +  # Color points by error
-  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Add a linear trend line
-  labs(title = "Predicted vs. Actual",
-       x = "Actual",
-       y = "Predicted") +
-  theme_minimal() +  # Minimalist theme
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "blue") +  # Add y=x line
-  scale_color_gradient(low = "green", high = "red", name = "Error (abs)") +  # Color scale legend
-  geom_text(aes(label = rownames(plot_data)), hjust = -0.2, vjust = 0.2, size = 2) +  # Add data point labels
-  theme(legend.position = "bottom") +  # Adjust legend position
-  annotate("text", x = 30, y = 45, label = "Red Line: Linear Trend Line", size = 3, color = "red") +  # Explanation for red line
-  annotate("text", x = 30, y = 30, label = "Blue Line: Perfect Predictions (y=x)", size = 3, color = "blue")  # Explanation for blue line
-```
+------------------------------------------------------------------------
 
+The second plot shows the error grade of the estimation, with green indicating the lowest error and red indicating the highest. It can be observed that the error is quiet to moderate at the edges that represent the lowest and highest LST values. The highest errors, represented by the red color, are around 40 Celsius, with a high overestimation that can be seen in the first plot.
+
+```{r,warning=FALSE,message=FALSE}
+ggplot(predictions, aes(x = Actual_Values, y = Prediction_Values)) +
+  geom_point(aes(color = abs(Actual_Values - Prediction_Values)), size = 3, alpha = 0.7) +  
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  
+  labs(title = "Predicted Values vs. Actual Values",
+       x = "Actual Values",
+       y = "Prediction Values") +
+  theme_minimal() +
+  scale_color_gradient(low = "green", high = "red", name = "Error (abs)") +
+  geom_text(aes(label = rownames(predictions)), hjust = -0.2, vjust = 0.2, size = 2) + 
+  theme(legend.position = "bottom") + 
+  annotate("text", x = 30, y = 45, label = "Red Line: Linear Trend Line", size = 3, color = "red")
+
+```
