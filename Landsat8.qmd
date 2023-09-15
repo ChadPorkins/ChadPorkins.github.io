@@ -2,18 +2,19 @@
 title: "Retrieving and extracting Land Surface Temperature (LST) values from Landsat 8 satellite"
 ---
 
-To retrieve Land Surface Temperature data, I utilized Google Earth Engine, a web application that allowed me to write code based on physical remote sensing principles. I specifically used band 10, which is the thermal band on the Landsat 8 satellite, to extract LST values from the satellite's data. (USGS, (n.d.))
+Land Surface Temperature data was obtained using Google Earth Engine. The platform provides a web application that enables the writing of code based on physical remote sensing principles. Specifically, band 10, which is the thermal band on the Landsat 8 satellite, was used to extract LST values from the satellite's data (USGS, n.d.).
 
-To make the code function properly, I utilized a polygon layer named NEMIA that encompasses the eastern coast of North America. Additionally, I transformed the table of synthetic fields with corresponding coordinates into a point layer using ARC GIS PRO.
+In order to obtain the Land Surface Temperatures (LST) using Google Earth Engine, a polygon layer named NEMIA, which encompasses the eastern coast of North America, was employed. Additionally, the synthetic fields table, including its corresponding coordinates, was converted into a point layer using ArcGIS Pro.
 
-First, the code adds the layers representing NEMIA (in red) and Fields (in green) to the map. Then, it centers the view on NEMIA, and retrieves Landsat 8 imagery for June 2018 within NEMIA. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al. (2019) in their research.
+First, the code adds layers to the map representing NEMIA (in red) and Fields (in green). It then centers the view on NEMIA and retrieves Landsat 8 imagery for the date range specified in the code within the NEMIA boundaries. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al. (2019) in their research. To identify clouds, cloud shadows, and cirrus clouds in Landsat imagery, the cloud masking function uses the bit value assigned from the QA band. Specifically, if the bit values of 4, 3, and 2 from the Landsat 8 imagery correspond to these cloud types, the function switches the pixel to NA. (Landsat Missions,2023)
 
-Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.
+Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics principles (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.
 
 To enhance the focus on synthetic grass and minimize the impact of the surrounding urban environment, the resolution for temperature data is set to 30 meters before projecting LST data. LST values are extracted from the reprojected data for each field. Finally, extracted LST data is exported as a CSV file.
 
-___
+It is important to note that the provided code example is only applicable to August 2018. However, for seminar research purposes, it was applied from June to August, spanning from 2013 to 2022.
 
+------------------------------------------------------------------------
 
 ```{r,eval=FALSE}
 // The shape files need to be uploaded to Google Earth Engine.
@@ -91,4 +92,3 @@ Export.table.toDrive({
 ```
 
 ![Fig 1. NEMIA layer with LST values from the code in June 2018.](LST.png){fig-align="center"}
-

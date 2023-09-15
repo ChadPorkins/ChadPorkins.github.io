@@ -17,7 +17,7 @@ summarise_all(list(p_value = ~shapiro.test(.)$p.value))
 glimpse(shapiro_results)
 ```
 
-From the normality test results, it was found that the average and the minimum temperatures aren't normally distributed. In light of that, all the correlation tests will be done with the "Kendall" method to simplify the statical calculations.
+From the normality test results, it was found that the average and the minimum temperatures aren't normally distributed. In light of that, all the correlation tests will be done with the "Kendall" method to simplify the statistical calculations.
 
 ------------------------------------------------------------------------
 

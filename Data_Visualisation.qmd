@@ -7,7 +7,7 @@ library(lubridate)
 summer_data = read.csv("summer_data.csv")
 ```
 
-Data visualization is essential for processing and drawing conclusions on the data set's land surface data (LST) throughout the years and the summer months.
+Data visualization is essential for processing and drawing conclusions on the land surface data (LST) dataset throughout the years and the summer months.
 
 This code generates box plots visually representing the Land Surface Temperature (LST) data from 2013 to 2022. Box plots are statistical plots that help in understanding the distribution of data. The box plots in this code identify patterns and LST changes over the given period.
 

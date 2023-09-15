@@ -2,27 +2,21 @@
 title: "Turf Fields Data"
 ---
 
-The data presented in this chapter is sourced from a publication by the New York City Department of Parks & Recreation. The publication indicates that the majority of synthetic turf fields in NYC utilize crumb rubber infill made from repurposed car and truck tires. Additionally, a table is provided showcasing various athletic fields in New York that feature artificial turf grass. (New York City Department of Parks & Recreation. (n.d.))
+In this seminar, a publication by the New York City Department of Parks & Recreation is used as a source of data on synthetic fields. According to the publication, the majority of synthetic turf fields in NYC use crumb rubber infill, which is made from repurposed car and truck tires. The publication also provides a table that features various athletic fields in New York that have artificial turf grass. (New York City Department of Parks & Recreation, n.d.)
 
 ```{r}
-# Load data for New York Turf Fields 1
 nyc1 <- read.csv("New York Turf Fields 1.csv")
-
-# Display the first few rows of the dataset
 head(nyc1)
 ```
 
-Using Google Earth, I added longitude and latitude coordinates to each artificial turf grass field, as seen in the following table.
+Using Google Earth, longitude and latitude coordinates were added to each artificial turf grass field, as seen in the following table.
 
 ```{r, warning=FALSE, message=FALSE}
-# Load data for New York Turf Fields 2
 nyc2 <- read.csv("New York Turf Fields 2.csv")
-
-# Display the first few rows of the dataset
 head(nyc2)
 ```
 
-To visualize the data, I created a map of the different artificial turf grass fields around New York.
+To visualize the data, a map of the different artificial turf grass fields across New York.
 
 ```{r, warning=FALSE, message=FALSE}
 library(leaflet)

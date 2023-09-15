@@ -21,7 +21,7 @@ The National Weather Service website was utilized to gather climatic data for th
 
 -   JFK INTERNATIONAL AIRPORT, NY US.
 
-One data frame was created to collect the following climate data in Fahrenheit and in Celsius for each weather station:
+One data frame was created to collect the following climate data in Fahrenheit and Celsius for each weather station:
 
 -   Monthly Mean Max Temperature.
 
@@ -37,4 +37,3 @@ Weather_Data = read.csv("Weather_Data.csv")
 glimpse(Weather_Data)
 
 ```
-

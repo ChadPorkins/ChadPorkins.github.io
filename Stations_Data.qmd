@@ -2,17 +2,17 @@
 title: "Weather stations data"
 ---
 
-In this seminar, to get weather data, I first classified and filtered relevant weather stations in terms of data. To do this, I used two databases from GHCNd.
+In this seminar, relevant weather stations were classified and filtered from two GHCNd databases to obtain weather data.
 
 The Global Historical Climatology Network Daily (GHCNd) is an online database of daily climate summaries from land surface monitoring stations worldwide. The database contains records from over 100,000 stations in 180 countries and territories, containing temperature, precipitation, snowfall, and snow depth data. (National Centers for Environmental Information. (n.d.))
 
-I have downloaded two databases containing the following data:
+Two databases were utilized containing the following data:
 
 1.  **Stations**: Station ID, latitude, longitude, elevation, State (if applicable), and Station name.
 
 2.  **Inventory**: Station ID, latitude, longitude, element type, and begin/end date.
 
-After downloading the databases from the GHCNd website, the data needed to be converted from text to CSV format. In addition, the relevant columns from each database were selected.
+After downloading data from the GHCNd website, it was converted from text to CSV format while selecting relevant columns.
 
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
@@ -44,7 +44,7 @@ inventory_data %>%
 
 ```
 
-These two databases were used to classify and filter weather stations with temperature-averaged data. Also, it was necessary to classify and filter stations that collected data from the summers of 2013 to 2022; the same stations also had to exist in 2013 when the Landsat 8 satellite was flown into space.
+In order to classify and filter relevant weather stations, two databases were utilized. It was important to select stations with temperature-averaged data, as the Landsat 8 LST values were extracted for each summer month's average values. Additionally, the selected stations had to collect data during summers from 2013 to 2022 and exist in 2013 when the Landsat 8 satellite was launched into space.
 
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
@@ -63,7 +63,7 @@ write.csv("stations_with_data_in_2023.csv", row.names = FALSE)
 
 ```
 
-Here is the data frame containing all the necessary data for this seminar.
+Finally, the data frame containing all the necessary data.
 
 ```{r,warning=FALSE,message=FALSE}
 stations_with_data_in_2023 = read.csv("stations_with_data_in_2023.csv")

@@ -1,5 +1,7 @@
 articles:
 
+Landsat Missions. (2023, July 21). Landsat 8-9 OLI/TIRS Collection 2 Level 2 Data Format Control Book. USGS. Retrieved September 15, 2023, from https://www.usgs.gov/media/files/landsat-8-9-olitirs-collection-2-level-2-data-format-control-book
+
 Facebook Open Source. (n.d.). *Prophet*. Prophet. Retrieved September 1, 2023, from https://facebook.github.io/prophet/
 
 Taylor, S. J., & Letham, B. (2018). Forecasting at scale. *The American Statistician*, *72*(1), 37-45.‏
@@ -20,4 +22,4 @@ National Centers for Environmental Information. (n.d.). *Global historical clim
 
 Earth Engine Data Catalog. (n.d.). USGS Landsat 8 level 2, collection 2, tier 1. https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2
 
-*Climate*. (n.d.). National Weather Service. https://www.weather.gov/wrh/Climate?wfo=okx
+National Weather Service. (n.d.). *Climate*. https://www.weather.gov/wrh/Climate?wfo=okx

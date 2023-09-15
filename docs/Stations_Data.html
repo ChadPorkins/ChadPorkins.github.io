@@ -143,6 +143,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./profile.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -218,19 +223,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Data_Cleaning.html" class="sidebar-item-text sidebar-link">Data preprocessing and summarization</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  Data_visualization.qmd
-  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Visualizing Data, Investigating Correlations, and Applying Regression Analysis</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Visualisation.html" class="sidebar-item-text sidebar-link">Data Visualization</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Correlations.html" class="sidebar-item-text sidebar-link">Investigating Correlations</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Regression.html" class="sidebar-item-text sidebar-link">Regression analysis</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assumptions.html" class="sidebar-item-text sidebar-link">Assumptions of Multiple Linear Regression</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Machine Learning Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning.html" class="sidebar-item-text sidebar-link">Random forest regression</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning_Plots.html" class="sidebar-item-text sidebar-link">Random forest regression plots</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Statistical Methods</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Time Series Forecasting</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Prophet.html" class="sidebar-item-text sidebar-link">Propheat Forcasting Procedure</a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -258,14 +316,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this seminar, to get weather data, I first classified and filtered relevant weather stations in terms of data. To do this, I used two databases from GHCNd.</p>
+<p>In this seminar, relevant weather stations were classified and filtered from two GHCNd databases to obtain weather data.</p>
 <p>The Global Historical Climatology Network Daily (GHCNd) is an online database of daily climate summaries from land surface monitoring stations worldwide. The database contains records from over 100,000 stations in 180 countries and territories, containing temperature, precipitation, snowfall, and snow depth data. (National Centers for Environmental Information. (n.d.))</p>
-<p>I have downloaded two databases containing the following data:</p>
+<p>Two databases were utilized containing the following data:</p>
 <ol type="1">
 <li><p><strong>Stations</strong>: Station ID, latitude, longitude, elevation, State (if applicable), and Station name.</p></li>
 <li><p><strong>Inventory</strong>: Station ID, latitude, longitude, element type, and begin/end date.</p></li>
 </ol>
-<p>After downloading the databases from the GHCNd website, the data needed to be converted from text to CSV format. In addition, the relevant columns from each database were selected.</p>
+<p>After downloading data from the GHCNd website, it was converted from text to CSV format while selecting relevant columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -292,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>inventory_data <span class="sc">%&gt;%</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(<span class="st">"Inventory_data.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>These two databases were used to classify and filter weather stations with temperature-averaged data. Also, it was necessary to classify and filter stations that collected data from the summers of 2013 to 2022; the same stations also had to exist in 2013 when the Landsat 8 satellite was flown into space.</p>
+<p>In order to classify and filter relevant weather stations, two databases were utilized. It was important to select stations with temperature-averaged data, as the Landsat 8 LST values were extracted for each summer month’s average values. Additionally, the selected stations had to collect data during summers from 2013 to 2022 and exist in 2013 when the Landsat 8 satellite was launched into space.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -308,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>stations_with_data_in_2023 <span class="sc">%&gt;%</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="st">"stations_with_data_in_2023.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here is the data frame containing all the necessary data for this seminar.</p>
+<p>Finally, the data frame containing all the necessary data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stations_with_data_in_2023 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"stations_with_data_in_2023.csv"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(stations_with_data_in_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

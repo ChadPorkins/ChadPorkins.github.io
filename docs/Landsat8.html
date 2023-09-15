@@ -244,21 +244,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 </li>
           <li class="sidebar-item">
-  Regression.qmd
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./Regression.html" class="sidebar-item-text sidebar-link">Regression analysis</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assumptions.html" class="sidebar-item-text sidebar-link">Assumptions of Multiple Linear Regression</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Time Series Analysis</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Machine Learning Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning.html" class="sidebar-item-text sidebar-link">Random forest regression</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning_Plots.html" class="sidebar-item-text sidebar-link">Random forest regression plots</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Statistical Methods</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Time Series Forecasting</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Prophet.html" class="sidebar-item-text sidebar-link">Propheat Forcasting Procedure</a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -286,11 +316,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>To retrieve Land Surface Temperature data, I utilized Google Earth Engine, a web application that allowed me to write code based on physical remote sensing principles. I specifically used band 10, which is the thermal band on the Landsat 8 satellite, to extract LST values from the satellite’s data. (USGS, (n.d.))</p>
-<p>To make the code function properly, I utilized a polygon layer named NEMIA that encompasses the eastern coast of North America. Additionally, I transformed the table of synthetic fields with corresponding coordinates into a point layer using ARC GIS PRO.</p>
-<p>First, the code adds the layers representing NEMIA (in red) and Fields (in green) to the map. Then, it centers the view on NEMIA, and retrieves Landsat 8 imagery for June 2018 within NEMIA. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al.&nbsp;(2019) in their research.</p>
-<p>Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.</p>
+<p>Land Surface Temperature data was obtained using Google Earth Engine. The platform provides a web application that enables the writing of code based on physical remote sensing principles. Specifically, band 10, which is the thermal band on the Landsat 8 satellite, was used to extract LST values from the satellite’s data (USGS, n.d.).</p>
+<p>In order to obtain the Land Surface Temperatures (LST) using Google Earth Engine, a polygon layer named NEMIA, which encompasses the eastern coast of North America, was employed. Additionally, the synthetic fields table, including its corresponding coordinates, was converted into a point layer using ArcGIS Pro.</p>
+<p>First, the code adds layers to the map representing NEMIA (in red) and Fields (in green). It then centers the view on NEMIA and retrieves Landsat 8 imagery for the date range specified in the code within the NEMIA boundaries. To ensure the accuracy of data and eliminate cloud and shadow effects from Landsat imagery, a cloud masking function (masking) is introduced. This step is crucial in generating reliable temperature data, as clouds significantly affect remotely sensed LST by absorbing almost all surface-emitted thermal energy. Due to cloud contamination, most LST products derived from various algorithms have spatial discontinuities, as highlighted by Wang et al.&nbsp;(2019) in their research. To identify clouds, cloud shadows, and cirrus clouds in Landsat imagery, the cloud masking function uses the bit value assigned from the QA band. Specifically, if the bit values of 4, 3, and 2 from the Landsat 8 imagery correspond to these cloud types, the function switches the pixel to NA. (Landsat Missions,2023)</p>
+<p>Next, the code calculates a cloud-free mean composite image using Landsat data and clips it to the NEMIA boundaries. Scaling factors are then applied to the optical and thermal bands to improve data quality and make it suitable for temperature analysis based on remote sensing physics principles (Earth Engine Data Catalog. (n.d.)). The land surface temperature (LST) is obtained from the thermal band of the Landsat imagery and converted into degrees Celsius. It is then displayed as a color-coded layer (LST1) on the map, visually representing the LST distribution.</p>
 <p>To enhance the focus on synthetic grass and minimize the impact of the surrounding urban environment, the resolution for temperature data is set to 30 meters before projecting LST data. LST values are extracted from the reprojected data for each field. Finally, extracted LST data is exported as a CSV file.</p>
+<p>It is important to note that the provided code example is only applicable to August 2018. However, for seminar research purposes, it was applied from June to August, spanning from 2013 to 2022.</p>
 <hr>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> The shape files need to be uploaded to Google Earth Engine.</span>

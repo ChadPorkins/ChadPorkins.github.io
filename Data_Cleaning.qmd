@@ -2,7 +2,7 @@
 title: "Data preprocessing and summarization"
 ---
 
-In order to ensure the accuracy of the Land Surface Temperature (LST) data, a histogram was conducted for analysis; from the histogram, it was found that it had a left-skewed distribution with a tail of small and unusual values. These values were likely outliers due to unusual cold days during the summer or cloud effects. To maintain the integrity of our dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary for removing potential outliers that could distort the data analysis.
+To ensure the accuracy of the Land Surface Temperature (LST) data, a histogram analysis was conducted. The histogram revealed a left-skewed distribution with a tail of small and unusual values. These values were likely outliers caused by unusual cold days during the summer or cloud effects. To maintain the integrity of the dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary to eliminate potential outliers that could skew the data analysis.
 
 ```{r,echo=FALSE}
 final_data = read.csv("final_data.csv")

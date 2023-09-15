@@ -2,11 +2,11 @@
 title: "Weather stations Spatial Join"
 ---
 
-To locate the nearest weather station for each artificial turf field, I utilized the spatial join tool within ARC GIS PRO software.
+To locate the nearest weather station for each artificial turf field, the spatial join tool was used in ARC GIS PRO software.
 
 ![Figure 2 shows green circles for the artificial turf grass field and red triangles for the weather stations.](LST2.png)
 
-Finally, a table was created which includes all the fields of artificial turf grass, the closest weather station, and the distance between them.
+Finally, a data table was created that includes all artificial turf grass fields, the nearest weather station, and the distance between them.
 
 ```{r}
 Spatial_Join =  read.csv("Spatial_Join.csv")

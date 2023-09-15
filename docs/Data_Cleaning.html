@@ -256,16 +256,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Time Series Analysis</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Machine Learning Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning.html" class="sidebar-item-text sidebar-link">Random forest regression</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Machine_Learning_Plots.html" class="sidebar-item-text sidebar-link">Random forest regression plots</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Data Integration and Joins</span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Statistical Methods</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Time Series Forecasting</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Prophet.html" class="sidebar-item-text sidebar-link">Propheat Forcasting Procedure</a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -293,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In order to ensure the accuracy of the Land Surface Temperature (LST) data, a histogram was conducted for analysis; from the histogram, it was found that it had a left-skewed distribution with a tail of small and unusual values. These values were likely outliers due to unusual cold days during the summer or cloud effects. To maintain the integrity of our dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary for removing potential outliers that could distort the data analysis.</p>
+<p>To ensure the accuracy of the Land Surface Temperature (LST) data, a histogram analysis was conducted. The histogram revealed a left-skewed distribution with a tail of small and unusual values. These values were likely outliers caused by unusual cold days during the summer or cloud effects. To maintain the integrity of the dataset, LST values below 20 degrees Celsius were removed. This data-cleansing process was necessary to eliminate potential outliers that could skew the data analysis.</p>
 <div class="cell">
 
 </div>
