@@ -15,6 +15,7 @@ website:
       - section: "Main Page"
         contents:
           - index.qmd
+          - review.qmd
       - section: "Data Sources and Collection"
         contents:
           - Turf_Fields_Data.qmd
