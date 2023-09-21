@@ -41,8 +41,8 @@ There is a strong correlation between the explanatory variables. In such a case,
 
 ```{r,message=FALSE,warning=FALSE}
 library(Kendall)
-independent_vars <- summer_data[, c("Avg.Temp.C", "Min.Temp.C")]
-cor_matrix <- cor(as.matrix(independent_vars), method = "kendall")
+independent_vars = summer_data[, c("Avg.Temp.C", "Min.Temp.C")]
+cor_matrix = cor(as.matrix(independent_vars), method = "kendall")
 print(cor_matrix)
 ```
 

@@ -1,0 +1,6 @@
+---
+title: "Abstract"
+---
+
+
+This seminar research examines how climate factors affect the Land Surface Temperature in synthetic turf fields in New York during the summer months of June, July, and August. The research revealed a significant positive correlation between the LST and climate factors, except for precipitation, although the correlation is low to moderate. Additionally, the research found that a linear model can explain 40.6% of the LST variance. However, the Random Forest model is more effective in predicting LST and can explain 47% of the variance. Lastly, the Prophet Forecasting Procedure was employed to forecast future LST values, indicating that synthetic turf fields in New York will experience an upward trend in LST over the next decade.

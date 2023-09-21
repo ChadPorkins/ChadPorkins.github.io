@@ -13,9 +13,9 @@ final_data = read.csv("final_data.csv")
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 
-final_data <- final_data %>%
-  filter(Lst > 20) %>%
-  group_by(Lst) %>%
+final_data = final_data |>
+  filter(Lst > 20) |>
+  group_by(Lst) |>
   summarize(
     Max.Temp.C = mean(Max.Temp.C),
     Min.Temp.C = mean(Min.Temp.C),
@@ -34,9 +34,11 @@ library(vip)
 library(randomForest)
 library(dplyr)
 
-vip_rf_model <- final_data %>%
+vip_rf_model = final_data %>%
 randomForest(Lst ~ Avg.Temp.C + Min.Temp.C + Max.Temp.C + Precipitation, data = .) %>%
 vip()
+
+#Note vip package works only with %>%
 
 vip_rf_model
 ```
@@ -54,37 +56,37 @@ library(dplyr)
 library(purrr)
 
 
-rf_function <- function(seed, data) {
+rf_function = function(seed, data) {
   set.seed(seed)  
-  rf_sample <- sample(1:nrow(data), 0.75 * nrow(data))
-  train_data <- data[rf_sample, ]
-  test_data <- data[-rf_sample, ]
+  rf_sample = sample(1:nrow(data), 0.75 * nrow(data))
+  train_data = data[rf_sample, ]
+  test_data = data[-rf_sample, ]
   
-rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C + Max.Temp.C, data = train_data)
+rf_model = randomForest(Lst ~ Min.Temp.C + Avg.Temp.C + Max.Temp.C, data = train_data)
   
-rf_predictions <- predict(rf_model, newdata = test_data)
+rf_predictions = predict(rf_model, newdata = test_data)
   
-mean_observed <- mean(test_data$Lst)
-tss <- sum((test_data$Lst - mean_observed)^2)
-rss <- sum((test_data$Lst - rf_predictions)^2)
-rsquared <- 1 - (rss / tss)
+mean_observed = mean(test_data$Lst)
+tss = sum((test_data$Lst - mean_observed)^2)
+rss = sum((test_data$Lst - rf_predictions)^2)
+rsquared = 1 - (rss / tss)
   
 return(rsquared)
 }
 
-num_iterations <- 999
+num_iterations = 999
 
-results <- 1:num_iterations %>%
+results = 1:num_iterations |>
   map_dbl(~ rf_function(.x, final_data))
 
-loop_results <- data.frame(
+loop_results = data.frame(
   best_seed = which.max(results),
   best_rsquared = max(results),
   min_rsquared = min(results),
   average_rsquared = mean(results)
 )
 
-loop_results %>%
+loop_results |>
   glimpse()
 
 #$ best_seed        <int> 337
@@ -93,4 +95,3 @@ loop_results %>%
 #$ average_rsquared <dbl> 0.469881
 
 ```
-

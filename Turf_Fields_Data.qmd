@@ -5,14 +5,14 @@ title: "Turf Fields Data"
 In this seminar, a publication by the New York City Department of Parks & Recreation is used as a source of data on synthetic fields. According to the publication, the majority of synthetic turf fields in NYC use crumb rubber infill, which is made from repurposed car and truck tires. The publication also provides a table that features various athletic fields in New York that have artificial turf grass. (New York City Department of Parks & Recreation, n.d.)
 
 ```{r}
-nyc1 <- read.csv("New York Turf Fields 1.csv")
+nyc1 = read.csv("New York Turf Fields 1.csv")
 head(nyc1)
 ```
 
 Using Google Earth, longitude and latitude coordinates were added to each artificial turf grass field, as seen in the following table.
 
 ```{r, warning=FALSE, message=FALSE}
-nyc2 <- read.csv("New York Turf Fields 2.csv")
+nyc2 = read.csv("New York Turf Fields 2.csv")
 head(nyc2)
 ```
 
@@ -23,8 +23,8 @@ library(leaflet)
 library(dplyr)
 
 # Create a leaflet map
-leaflet(data = nyc2) %>%
-  addTiles() %>%
+leaflet(data = nyc2) |>
+  addTiles() |>
   addMarkers(
     ~Longitude, ~Latitude,
     popup = ~paste("Location: ", Location, "<br>ID: ", ID)

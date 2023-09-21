@@ -9,24 +9,24 @@ It is important to ensure that the centralized table only includes the necessary
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 
-Spatial_Join <- read.csv("Spatial_Join.csv")
-Weather_Data <- read.csv("Weather_Data.csv")
+Spatial_Join = read.csv("Spatial_Join.csv")
+Weather_Data = read.csv("Weather_Data.csv")
 
-folder_path <- 'L8/All/'
-csv_files <- list.files(path = folder_path, pattern = "*.csv", full.names = TRUE)
+folder_path = 'L8/All/'
+csv_files = list.files(path = folder_path, pattern = "*.csv", full.names = TRUE)
 
-combined_data <- csv_files %>%
-  lapply(read.csv) %>%
+combined_data = csv_files |>
+  lapply(read.csv) |>
   bind_rows()
 
-final_data <- combined_data %>%
-  left_join(Spatial_Join, by = "ID") %>%
-  left_join(Weather_Data, by = c("Station_ID", "Date")) %>%
-  select(ID, Lst = first, Date, Precipitation, Max.Temp.C, Min.Temp.C, Avg.Temp.C) %>%
-  mutate(Date = as.Date(paste("01", Date), format = "%d %b-%y")) %>%
-  mutate(Month = format(Date, "%m")) %>%
-  mutate(Year = format(Date, "%Y")) %>%
-  arrange(Date) %>%
+final_data = combined_data |>
+  left_join(Spatial_Join, by = "ID") |>
+  left_join(Weather_Data, by = c("Station_ID", "Date")) |>
+  select(ID, Lst = first, Date, Precipitation, Max.Temp.C, Min.Temp.C, Avg.Temp.C) |>
+  mutate(Date = as.Date(paste("01", Date), format = "%d %b-%y")) |>
+  mutate(Month = format(Date, "%m")) |>
+  mutate(Year = format(Date, "%Y")) |>
+  arrange(Date) |>
   filter(!is.na(Lst))
 
 glimpse(final_data)

@@ -17,14 +17,14 @@ After downloading data from the GHCNd website, it was converted from text to CSV
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 
-data_stations <- read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-stations.txt", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)
+data_stations = read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-stations.txt", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)
 
-station_data <- data_stations %>%
-  select(V1, V2, V3) %>%
-  setNames(c("Station_ID", "Latitude", "Longitude")) %>%
+station_data = data_stations |>
+  select(V1, V2, V3) |>
+  setNames(c("Station_ID", "Latitude", "Longitude")) |>
   as.data.frame()
 
-station_data %>%
+station_data |>
   write.csv("station_data.csv", row.names = FALSE)
 
 ```
@@ -32,14 +32,14 @@ station_data %>%
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 
-data_inventory <- read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-inventory.txt", stringsAsFactors = FALSE)
+data_inventory = read.table("ncei.noaa.gov_pub_data_ghcn_daily_ghcnd-inventory.txt", stringsAsFactors = FALSE)
 
-inventory_data <- data_inventory %>%
-  select(V1, V2, V3, V4, V5, V6) %>%
-  setNames(c("Station_ID", "Latitude", "Longitude", "Data_Type", "Start_Year", "End_Year")) %>%
+inventory_data = data_inventory |>
+  select(V1, V2, V3, V4, V5, V6) |>
+  setNames(c("Station_ID", "Latitude", "Longitude", "Data_Type", "Start_Year", "End_Year")) |>
   as.data.frame()
 
-inventory_data %>%
+inventory_data |>
   write.csv("Inventory_data.csv", row.names = FALSE)
 
 ```
@@ -49,16 +49,16 @@ In order to classify and filter relevant weather stations, two databases were ut
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
 
-inventory_data <- read.csv("Inventory_Data.csv", stringsAsFactors = FALSE)
-station_data <- read.csv("station_data.csv", stringsAsFactors = FALSE)
+inventory_data = read.csv("Inventory_Data.csv", stringsAsFactors = FALSE)
+station_data = read.csv("station_data.csv", stringsAsFactors = FALSE)
 
-stations_with_data_in_2023 <- inventory_data %>%
-  filter(Data_Type == "TAVG") %>%
-  inner_join(station_data, by = "Station_ID") %>%
-  mutate(Start_Year = as.numeric(Start_Year), End_Year = as.numeric(End_Year)) %>%
+stations_with_data_in_2023 = inventory_data |>
+  filter(Data_Type == "TAVG") |>
+  inner_join(station_data, by = "Station_ID") |>
+  mutate(Start_Year = as.numeric(Start_Year), End_Year = as.numeric(End_Year)) |>
   filter(End_Year >= 2023, Start_Year < 2013)
 
-stations_with_data_in_2023 %>%
+stations_with_data_in_2023 |>
 write.csv("stations_with_data_in_2023.csv", row.names = FALSE)
 
 ```

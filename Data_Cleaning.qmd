@@ -28,10 +28,10 @@ In order to account for factors like the urban landscape of New York that can im
 ```{r,warning=FALSE,message=FALSE}
 
 library(dplyr)
-summer_data <- final_data %>%
-  filter(Lst>20) %>%
-  group_by(Date, Year, Month ) %>%
-  summarise_all(.funs = mean, na.rm = TRUE)  %>%
+summer_data = final_data |>
+  filter(Lst>20) |>
+  group_by(Date, Year, Month ) |>
+  summarise_all(.funs = mean, na.rm = TRUE)  |>
   ungroup()
 
 glimpse(summer_data)

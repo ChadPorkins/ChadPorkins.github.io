@@ -13,9 +13,9 @@ final_data = read.csv("final_data.csv")
 ```{r, warning=FALSE,message=FALSE,echo=FALSE}
 library(dplyr)
 
-final_data <- final_data %>%
-  filter(Lst > 20) %>%
-  group_by(Lst) %>%
+final_data = final_data |>
+  filter(Lst > 20) |>
+  group_by(Lst) |>
   summarize(
     Max.Temp.C = mean(Max.Temp.C),
     Min.Temp.C = mean(Min.Temp.C),
@@ -29,17 +29,17 @@ final_data <- final_data %>%
 library(randomForest)
 library(ggplot2)
 set.seed(337)
-rf_sample <- sample(1:nrow(final_data), 0.75 * nrow(final_data))
-train_data <- final_data[rf_sample, ]
-test_data <- final_data[-rf_sample, ]
-rf_model <- randomForest(Lst ~ Min.Temp.C + Avg.Temp.C, data = train_data)
-rf_predictions <- predict(rf_model, newdata = test_data)
+rf_sample = sample(1:nrow(final_data), 0.75 * nrow(final_data))
+train_data = final_data[rf_sample, ]
+test_data = final_data[-rf_sample, ]
+rf_model = randomForest(Lst ~ Min.Temp.C + Avg.Temp.C, data = train_data)
+rf_predictions = predict(rf_model, newdata = test_data)
 ```
 
 ```{r,warning=FALSE,message=FALSE}
 library(ggplot2)
 
-predictions <- data.frame(
+predictions = data.frame(
   Actual_Values = test_data$Lst,
   Prediction_Values = rf_predictions
 )

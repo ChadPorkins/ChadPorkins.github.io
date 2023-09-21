@@ -10,8 +10,8 @@ In order to perform correlation tests between the LST data and data from weather
 
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
-shapiro_results <- summer_data %>%
-select(Lst,Precipitation,Max.Temp.C,Min.Temp.C,Avg.Temp.C) %>%
+shapiro_results = summer_data |>
+select(Lst,Precipitation,Max.Temp.C,Min.Temp.C,Avg.Temp.C) |>
 summarise_all(list(p_value = ~shapiro.test(.)$p.value))
 
 glimpse(shapiro_results)
@@ -27,10 +27,10 @@ Based on the plot results interpretation, it can be concluded that there exists 
 library(ggplot2)
 library(cowplot)
 
-create_scatter_plot <- function(data, x_var, y_var, x_label, y_label, plot_color, header) {
-  correlation_result <- cor.test(data[[x_var]], data[[y_var]], method = "kendall")
+create_scatter_plot = function(data, x_var, y_var, x_label, y_label, plot_color, header) {
+  correlation_result = cor.test(data[[x_var]], data[[y_var]], method = "kendall")
   
-  plot <- ggplot(data = data, aes(x = .data[[x_var]], y = .data[[y_var]])) +
+  plot = ggplot(data = data, aes(x = .data[[x_var]], y = .data[[y_var]])) +
     geom_point(color = plot_color, fill = "white", size = 3) +
     geom_smooth(method = "lm", se = FALSE, color = "#d62728", linetype = "dashed") +
     geom_text(aes(label = paste("Corr =", round(correlation_result$estimate, 2),
@@ -44,12 +44,12 @@ create_scatter_plot <- function(data, x_var, y_var, x_label, y_label, plot_color
 }
 
 
-plot1 <- create_scatter_plot(summer_data, "Avg.Temp.C", "Lst", "Avg Temp C", "LST", "#1f77b4", "Avg Temp C vs. LST")
-plot2 <- create_scatter_plot(summer_data, "Min.Temp.C", "Lst", "Min Temp C", "LST", "#800080", "Min Temp C vs. LST")
-plot3 <- create_scatter_plot(summer_data, "Max.Temp.C", "Lst", "Max Temp C", "LST", "#2ca02c", "Max Temp C vs. LST")
-plot4 <- create_scatter_plot(summer_data, "Precipitation", "Lst", "Precipitation", "LST", "#000000", "Precipitation vs. LST")
+plot1 = create_scatter_plot(summer_data, "Avg.Temp.C", "Lst", "Avg Temp C", "LST", "#1f77b4", "Avg Temp C vs. LST")
+plot2 = create_scatter_plot(summer_data, "Min.Temp.C", "Lst", "Min Temp C", "LST", "#800080", "Min Temp C vs. LST")
+plot3 = create_scatter_plot(summer_data, "Max.Temp.C", "Lst", "Max Temp C", "LST", "#2ca02c", "Max Temp C vs. LST")
+plot4 = create_scatter_plot(summer_data, "Precipitation", "Lst", "Precipitation", "LST", "#000000", "Precipitation vs. LST")
 
-combined_plots <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2)
+combined_plots = plot_grid(plot1, plot2, plot3, plot4, ncol = 2)
 
 combined_plots
 ```

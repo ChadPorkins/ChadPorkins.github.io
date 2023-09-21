@@ -19,7 +19,7 @@ In addition to the previously observed temporal patterns, it is noteworthy that 
 library(ggplot2)
 library(ggpubr)
 
-median_lst <- median(summer_data$Lst)
+median_lst = median(summer_data$Lst)
 
 ggplot(summer_data, aes(x = factor(Year), y = Lst, fill = factor(Year))) +
   geom_boxplot(outlier.shape = NA, width = 0.6, color = "gray30", alpha = 0.7) +
@@ -55,7 +55,7 @@ The months of August and July have the lowest LST values, which can be attribute
 In June 2015, the temperature was exceptionally low, with a minimum LST of 28.5 degrees Celsius. In contrast, July 2020 was the hottest month, with a temperature of 46.5 degrees Celsius, almost 1.6 times higher than the lowest temperature recorded in June 2015. This significant temperature difference highlights the dynamic nature of LST patterns.
 
 ```{r,warning=FALSE,message=FALSE}
-my_color_scale <- scale_fill_gradientn(colors = viridis::viridis(10), 
+my_color_scale = scale_fill_gradientn(colors = viridis::viridis(10), 
                                        name = "Lst", 
                                        breaks = seq(25, 55, by = 5))
 

@@ -12,34 +12,52 @@ website:
     foreground: "light"
     collapse-level: 2 
     contents:
-      - section: "Main Page"
+      - section: "Title page"
         contents:
           - index.qmd
+      - section: "Abstract"    
+        contents: 
+          - abstract.qmd
+      - section: "Literature Review"
+        contents:
           - review.qmd
-      - section: "Data Sources and Collection"
+      - section: "Methodology"
         contents:
-          - Turf_Fields_Data.qmd
-          - Landsat8.qmd
-          - Stations_Data.qmd
-          - Stations_Data_Spatial_Join.qmd
-          - Weather_Data.qmd
-      - section: "Data Cleaning and Preprocessing"
+          - section: "Data Sources and Collection"
+            contents:
+              - Turf_Fields_Data.qmd
+              - Landsat8.qmd
+              - Stations_Data.qmd
+              - Stations_Data_Spatial_Join.qmd
+              - Weather_Data.qmd
+          - section: "Data Cleaning and Preprocessing"
+            contents:
+              - Data_Integration_and_Selection.qmd
+              - Data_Cleaning.qmd
+      - section: "Results"
         contents:
-          - Data_Integration_and_Selection.qmd
-          - Data_Cleaning.qmd
-      - section: "Visualizing Data, Investigating Correlations, and Applying Regression Analysis"
-        contents: 
-          - Data_Visualisation.qmd
-          - Correlations.qmd
-          - Regression.qmd
-          - Assumptions.qmd
-      - section: "Machine Learning Regression"
-        contents: 
-          - Machine_Learning.qmd
-          - Machine_Learning_Plots.qmd
-      - section: "Time Series Forecasting"
-        contents: 
-          - Prophet.qmd
+          - section: "Visualizing Data, Investigating Correlations, and Applying Regression Analysis"  # Subsection 1
+            contents: 
+              - Data_Visualisation.qmd
+              - Correlations.qmd
+              - Regression.qmd
+              - Assumptions.qmd
+          - section: "Machine Learning Regression"
+            contents: 
+              - Machine_Learning.qmd
+              - Machine_Learning_Plots.qmd
+          - section: "Time Series Forecasting"
+            contents: 
+              - Prophet.qmd
+      - section: "Discussion" 
+        contents:
+          - discussion.qmd 
+      - section: "Conclusions"  
+        contents:
+          - conclusions.qmd 
+      - section: "References"  
+        contents:
+          - references.qmd    
 
 format:
   html:
@@ -48,4 +66,3 @@ format:
     toc: true
 
 editor: visual
-

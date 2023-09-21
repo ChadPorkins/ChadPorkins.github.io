@@ -2,7 +2,7 @@
 title: "GIT Seminar"
 subtitle: "Spatiotemporal Analysis of Summer Land Surface Temperature in New York City's Synthetic Turf Fields (2013-2022): Integrating Landsat 8 and Weather Station Data, Empowered by Machine Learning Techniques."
 author: "Jakob Alderson"
-date: "September 30 2023"
+date: "September 29 2023"
 about:
   id: first-heading
   image: profile.png
@@ -30,4 +30,4 @@ Head of the Geoinformatics Department at Ben Gurion University of the Negev.
 I thank Professor Itai Kloog and ScD, MSc, Homero Harari from the Icahn School of Medicine at Mount Sinai, who gave me the privilege and the honor to work with them this year in academic research and guided me in my first steps in the academic world.
 :::
 
-Jacob Alderson's seminar work In Geographic Information Technologies, In the Department of Environmental, Geoinformatic and Urban Planning Sciences in Ben Gurion University of the Negev.
+Jakob Alderson's seminar work In Geographic Information Technologies, In the Department of Environmental, Geoinformatic and Urban Planning Sciences in Ben Gurion University of the Negev.
