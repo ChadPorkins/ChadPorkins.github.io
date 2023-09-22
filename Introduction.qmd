@@ -1,11 +1,9 @@
 ---
 title: "Introduction"
 ---
+Synthetic turf fields have become popular for sports and recreational activities worldwide due to their ease of installation and low maintenance requirements. However, it is crucial to consider the impact of Land Surface Temperature on human health and the environment. Elevated Land Surface Temperature of synthetic turf fields can have various consequences, ranging from discomfort to heat-related health issues and environmental impacts. To address these concerns, it is essential to understand the complex relationship between climate factors and LST on synthetic turf fields.
 
-```{r}
+The research question of this seminar is:
+What is the effect of climate factors on the Land Surface Temperature of synthetic turf fields during the summer months?
 
-```
-
-```{r}
-1 + 1
-```
+This seminar research hypothesizes that climate factors will have a significant effect on the Land Surface Temperature of synthetic turf fields during the summer months, and the significant climate factors can be used to build a prediction model of future Land Surface Temperature of synthetic turf fields during the summer months.

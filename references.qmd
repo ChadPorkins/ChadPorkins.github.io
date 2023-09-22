@@ -2,28 +2,42 @@
 title: "References"
 ---
 
-articles:
+[**Bibliography**]{.underline}**:**
 
-Landsat Missions. (2023, July 21). Landsat 8-9 OLI/TIRS Collection 2 Level 2 Data Format Control Book. USGS. Retrieved September 15, 2023, from https://www.usgs.gov/media/files/landsat-8-9-olitirs-collection-2-level-2-data-format-control-book
+Bergeron, M. F., DiLaura Devore, C., Rice, S. G., & Council on Sports Medicine and Fitness and Council on School Health. (2011). Climatic heat stress and exercising children and adolescents. *Pediatrics, 128*(3), e741-e747.
 
-Facebook Open Source. (n.d.). *Prophet*. Prophet. Retrieved September 1, 2023, from https://facebook.github.io/prophet/
+Box, G. E. (1976). Science and statistics. *Journal of the American Statistical Association, 71*(356), 791-799.
 
-Taylor, S. J., & Letham, B. (2018). Forecasting at scale. *The American Statistician*, *72*(1), 37-45.‏
+Gould, H. P., Lostetter, S. J., Samuelson, E. R., & Guyton, G. P. (2022). Lower extremity injury rates on artificial turf versus natural grass playing surfaces: a systematic review. *The American Journal of Sports Medicine, 51*(6), 1615-1621.
 
-Boehmke. (n.d.). Random Forests. University of Cincinnati Business Analytics R Programming Guide. https://uc-r.github.io/random_forests
+Jastifer, J. R., McNitt, A. S., Mack, C. D., Kent, R. W., McCullough, K. A., Coughlin, M. J., & Anderson, R. B. (2019). Synthetic turf: history, design, maintenance, and athlete safety. *Sports Health, 11*(1), 84-90.
 
-Box, G. E. (1976). Science and statistics. *Journal of the American Statistical Association*, *71*(356), 791-799.‏
+Kanaan, A., Sevostianova, E., Leinauer, B., & Sevostianov, I. (2020). Water Requirements for Cooling Artificial Turf. *Journal of Irrigation and Drainage Engineering, 146*(10), 05020004.
 
-USGS. (n.d.). Landsat 8. https://www.usgs.gov/landsat-missions/landsat-8
+Landsat Missions. (2023, July 21). Landsat 8-9 OLI/TIRS Collection 2 Level 2 Data Format Control Book. USGS. Retrieved September 15, 2023, from [**https://www.usgs.gov/media/files/landsat-8-9-olitirs-collection-2-level-2-data-format-control-book**](https://www.usgs.gov/media/files/landsat-8-9-olitirs-collection-2-level-2-data-format-control-book)
 
-Wang, T., Shi, J., Ma, Y., Husi, L., Comyn‐Platt, E., Ji, D., \... & Xiong, C. (2019). Recovering land surface temperature under cloudy skies considering the solar‐cloud‐satellite geometry: Application to MODIS and Landsat‐8 data. *Journal of Geophysical Research: Atmospheres*, *124*(6), 3401-3416.‏
+McNitt, A. S., Petrunak, D. M., & Serensits, T. J. (2007, June). Temperature amelioration of synthetic turf surfaces through irrigation. In *II International Conference on Turfgrass Science and Management for Sports Fields 783*, 573-582.
 
-data sources:
+Murphy, M., & Warner, G. R. (2022). Health impacts of artificial turf: Toxicity studies, challenges, and future directions. *Environmental Pollution, 119841.*
 
-New York City Department of Parks & Recreation. (n.d.). *Synthetic Turf Lead Results*. Wayback Machine. web.archive.org/web/20180203033627/https://www.nycgovparks.org/news/reports/synthetic-turf-tests
+Russo, C., Cappelletti, G. M., & Nicoletti, G. M. (2022). The product environmental footprint approach to compare the environmental performances of artificial and natural turf. *Environmental Impact Assessment Review, 95*, 106800.
 
-National Centers for Environmental Information. (n.d.). *Global historical climatology network daily (GHCNd)*. https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily
+Taylor, S. J., & Letham, B. (2018). Forecasting at scale. *The American Statistician, 72*(1), 37-45.
 
-Earth Engine Data Catalog. (n.d.). USGS Landsat 8 level 2, collection 2, tier 1. https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2
+Thoms, A. W., Brosnan, J. T., Zidek, J. M., & Sorochan, J. C. (2014). Models for predicting surface temperatures on synthetic turf playing surfaces. *Procedia Engineering, 72*, 895-900.
 
-National Weather Service. (n.d.). *Climate*. https://www.weather.gov/wrh/Climate?wfo=okx
+USGS. (n.d.). Landsat 8. [**https://www.usgs.gov/landsat-missions/landsat-8**](https://www.usgs.gov/landsat-missions/landsat-8)
+
+Wang, T., Shi, J., Ma, Y., Husi, L., Comyn‐Platt, E., Ji, D., \... & Xiong, C. (2019). Recovering land surface temperature under cloudy skies considering the solar‐cloud‐satellite geometry: Application to MODIS and Landsat‐8 data. *Journal of Geophysical Research: Atmospheres, 124*(6), 3401-3416.
+
+Facebook Open Source. (n.d.). Prophet. Prophet. Retrieved September 1, 2023, from [**https://facebook.github.io/prophet/**](https://facebook.github.io/prophet/)‏
+
+[**Data Sources:**]{.underline}
+
+Earth Engine Data Catalog. (n.d.). USGS Landsat 8 level 2, collection 2, tier 1. [**https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2**](https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2)
+
+National Centers for Environmental Information. (n.d.). Global historical climatology network daily (GHCNd). [**https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily**](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily)
+
+National Weather Service. (n.d.). Climate. [**https://www.weather.gov/wrh/Climate?wfo=okx**](https://www.weather.gov/wrh/Climate?wfo=okx)
+
+New York City Department of Parks & Recreation. (n.d.). Synthetic Turf Lead Results. Wayback Machine. web.archive.org/web/20180203033627/[**https://www.nycgovparks.org/news/reports/synthetic-turf-tests**](https://www.nycgovparks.org/news/reports/synthetic-turf-tests)
