@@ -91,4 +91,4 @@ Export.table.toDrive({
 
 ```
 
-![Fig 1. NEMIA layer with LST values from the code in June 2018.](LST.png){fig-align="center"}
+![Figure 1. NEMIA layer with LST values from the code in June 2018.](LST.png){fig-align="center"}

@@ -44,7 +44,7 @@ inventory_data |>
 
 ```
 
-In order to classify and filter relevant weather stations, two databases were utilized. It was important to select stations with temperature-averaged data, as the Landsat 8 LST values were extracted for each summer month's average values. Additionally, the selected stations had to collect data during summers from 2013 to 2022 and exist in 2013 when the Landsat 8 satellite was launched into space.
+In order to classify and filter relevant weather stations, the two databases were utilized. It was important to select stations with temperature-averaged data, as the Landsat 8 LST values were extracted for each summer month's average values. Additionally, the selected stations had to collect data during summers from 2013 to 2022 and existed in 2013 when the Landsat 8 satellite was launched into space.
 
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)

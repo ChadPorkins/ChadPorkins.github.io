@@ -4,7 +4,7 @@ title: "Random forest regression"
 
 Random forest regression is a machine learning technique that improves the predictive accuracy of decision tree models. It is beneficial in cases where a single decision tree model shows high variance and poor predictive accuracy. The random forest technique addresses the issue of tree correlation present in bagging techniques by introducing more randomness during the tree-building process. As a result, Random Forest exhibits reduced variance and improved predictive accuracy compared to individual trees. (Boehmke, (n.d.))
 
-In regression analysis, data aggregation was used to simplify and facilitate the process to achieve higher data accuracy. However, machine learning requires a large number of observations and values to train Random Forest and obtain high accuracy. To achieve this, it is crucial to focus on the data frame before aggregation (final_data) and ensure that each LST value is unique, without any duplications that may harm the training quality of the machine. To accomplish this, the following code calculates the average of the data in rows where LST values are duplicated.
+In regression analysis, data aggregation was used to simplify and facilitate the process to achieve higher data accuracy. However, machine learning requires many observations and values to train Random Forest and obtain high accuracy. To achieve this, it is crucial to focus on the data frame before aggregation (final_data) and ensure that each LST value is unique, without any duplications that may harm the training quality of the machine. To accomplish this, the following code calculates the average value rows where LST values are duplicated.
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 final_data = read.csv("final_data.csv")
@@ -27,7 +27,7 @@ final_data = final_data |>
 
 ------------------------------------------------------------------------
 
-Compared to linear regression, the random forest method can identify essential variables based on their predictive power, even if they do not meet the assumptions of linear regression or have high p-values in the original linear model. The VIP package can be used to check which variables are best for the machine learning process and to see each variable's importance score. In this case, temperature variables have a high importance score and will be used in the random model.
+Compared to linear regression, the random forest method can identify essential variables based on their predictive power, even if they do not meet the assumptions of linear regression or have high p-values in the original linear model. The VIP package can be used to check which variables are best for the machine learning process and to see each variable's importance score. In this case, temperature variables have a high importance score and will be used in the random forest model.
 
 ```{r,warning=FALSE,message=FALSE}
 library(vip)
@@ -47,7 +47,7 @@ vip_rf_model
 
 To evaluate the performance of a machine learning model, the data was divided into two sets - a training set and a test set. The training set was used to train the model by allowing it to identify patterns and relationships in the data. The test set was then used to assess how accurately the model performs on new data.
 
-The ultimate goal of a machine learning model is to make accurate predictions on new data that it has not seen before. However, the training results may reveal if the model becomes too specialized and overfits, resulting in poor performance on new data. To prevent this, the model was run 999 times to get a more accurate estimate of its performance. In each run, the R-squared values of the predictions in relation to the test data were checked.
+The ultimate goal of a machine learning model is to make accurate predictions on new data that it has not seen before. However, the training results may reveal if the model becomes too specialized and overfits, resulting in poor performance on new data. To prevent this, the model was run **999** times to get a more accurate estimate of its performance. In each run, the R-squared values of the predictions in relation to the test data were checked.
 
 It was found that the Random Forest model had an average R squared value of 0.47, with a maximum value of 0.55. This indicates an improvement in variance explanation of 7% and a 15% improvement relative to the linear model.
 

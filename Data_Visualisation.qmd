@@ -61,7 +61,7 @@ my_color_scale = scale_fill_gradientn(colors = viridis::viridis(10),
 
 ggplot(summer_data, aes(x = Year, y = Month, fill = Lst)) +
   geom_tile(color = "white") +
-  geom_text(aes(label = round(Lst, 1)), color = "black", size = 3) +  # Add temperature values
+  geom_text(aes(label = round(Lst, 1)), color = "black", size = 3) +
   labs(title = "Heat Map of Land Surface Temperature Over Months and Years",
        x = "Year",
        y = "Month") +

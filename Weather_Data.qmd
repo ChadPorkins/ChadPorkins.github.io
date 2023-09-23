@@ -21,7 +21,7 @@ The National Weather Service website was utilized to gather climatic data for th
 
 -   JFK INTERNATIONAL AIRPORT, NY US.
 
-One data frame was created to collect the following climate data in Fahrenheit and Celsius for each weather station:
+One data frame was created to collect the following climate data in Fahrenheit and Celsius for each weather station from the National Weather Service website:
 
 -   Monthly Mean Max Temperature.
 
