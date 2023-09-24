@@ -6,7 +6,7 @@ Forecasting is a common data science task that helps with prediction, planning, 
 
 Prophet is a powerful tool for forecasting time series data. It employs an additive model that captures non-linear trends, yearly, weekly, and daily seasonality, and holiday effects. It is particularly well-suited for time series data with strong seasonal effects and a significant amount of historical data. With Prophet, you can easily obtain accurate forecasts without needing manual adjustments, even when dealing with messy data. It can easily handle outliers, missing data, and sudden changes in your time series, making it an excellent choice for time series forecasting. (Facebook Open Source, (n.d.))
 
-For this seminar research, the Prophet forecasting procedure was chosen due to its simplicity and flexibility in handling data, as well as the noticeable improvement that was achieved in nonlinear regression by using random forest. Despite gaps in the data between years and repeated values for each month from multiple synthetic turf fields, the Prophet model can still accurately predict future LST values.
+For this seminar research, the Prophet forecasting procedure was chosen due to its simplicity and flexibility in handling data, as well as the noticeable improvement that was achieved in nonlinear regression by using random forest. Despite gaps in the data between years and repeated values for each month from multiple synthetic turf fields, the Prophet model can still accurately predict future Land Surface Temperature (LST) values.
 
 ------------------------------------------------------------------------
 

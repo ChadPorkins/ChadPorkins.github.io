@@ -23,7 +23,7 @@ labs(x = "LST", y = "Frequency", title = "Histogram and Density of LST") +
 
 ```
 
-In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature (LST), it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.
+In order to account for factors like the urban landscape of New York that can impact Land Surface Temperature, it was decided to employ a method of averaging LST values for each field every month during the summer months spanning from 2013 to 2022. Through this process, it is expected to achieve higher data accuracy. This improved dataset will facilitate more accurate statistical analyses and allow for more meaningful insights from the collected data.
 
 ```{r,warning=FALSE,message=FALSE}
 

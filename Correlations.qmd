@@ -6,7 +6,7 @@ title: "Investigating Correlations"
 summer_data = read.csv("summer_data.csv")
 ```
 
-In order to perform correlation tests between the LST data and data from weather stations, a Shapiro normality test needs to be conducted to determine the appropriate method for the correlation tests.
+In order to perform correlation tests between the Land Surface Temperature (LST) data and data from weather stations, a Shapiro normality test needs to be conducted to determine the appropriate method for the correlation tests.
 
 ```{r,warning=FALSE,message=FALSE}
 library(dplyr)
@@ -21,7 +21,7 @@ From the normality test results, it was found that the average and the minimum t
 
 ------------------------------------------------------------------------
 
-Based on the plot results interpretation, it can be concluded that there exists a low to medium significant positive correlation between the Lst and Temperature variables. On the other hand, the correlation between Lst and Precipitation is negligible and insignificant. Considering these findings alongside the normal distribution of Lst values, a standard linear model will be conducted for further analysis.
+Based on the plot results interpretation, it can be concluded that there exists a low to medium significant positive correlation between the LST and Temperature variables. On the other hand, the correlation between LST and Precipitation is negligible and insignificant. Considering these findings alongside the normal distribution of LST values, a standard linear model will be conducted for further analysis.
 
 ```{r, message=FALSE,warning=FALSE}
 library(ggplot2)

@@ -6,7 +6,7 @@ title: "Regression analysis"
 summer_data = read.csv("summer_data.csv")
 ```
 
-After obtaining the correlation results, a standard linear model will be conducted to further analyze the relationship between the Lst data and the Temperature variables. To obtain the most suitable model, the `Stepwise Algorithm` will be used.
+After obtaining the correlation results, a standard linear model will be conducted to further analyze the relationship between the Land Surface Temperature (LST) data and the Temperature variables. To obtain the most suitable model, the `Stepwise Algorithm` will be used.
 
 ```{r,message=FALSE,warning=FALSE,results='hide'}
 library(stats)
@@ -15,9 +15,9 @@ model = stats::step(model)
 
 ```
 
-The investigation was conducted to determine the relationship between "Avg.Temp.C" and "Min.Temp.C," two independent variables, and their effect on the dependent variable "LST" using the results of the Stepwise Algorithm. The model obtained a small p-value of 0.0008871, indicating its statistical significance. The model's R-squared value of about 0.406 suggests that the variations in "Avg.Temp.C" and "Min.Temp.C" can account for 40.6% of the variance in "Lst." However, it's essential to note that other unmeasured factors could influence "Lst," as there is still a notable amount of unexplained variance.
+The investigation was conducted to determine the relationship between "Avg.Temp.C" and "Min.Temp.C," two independent variables, and their effect on the dependent variable "LST" using the results of the Stepwise Algorithm. The model obtained a small p-value of 0.0008871, indicating its statistical significance. The model's R-squared value of about 0.406 suggests that the variations in "Avg.Temp.C" and "Min.Temp.C" can account for 40.6% of the variance in "LST." However, it's essential to note that other unmeasured factors could influence "LST," as there is still a notable amount of unexplained variance.
 
-The coefficients for "Avg.Temp.C" and "Min.Temp.C" are statistically significant. "Avg.Temp.C" has a positive coefficient of approximately 6.555, indicating that for each one-unit increase in average temperature, "Lst" is expected to increase by about 6.555 units. Conversely, "Min.Temp.C" has a negative coefficient of approximately -5.155, indicating that for each one-unit increase in minimum temperature, "Lst" is expected to decrease by about 5.155 units.
+The coefficients for "Avg.Temp.C" and "Min.Temp.C" are statistically significant. "Avg.Temp.C" has a positive coefficient of approximately 6.555, indicating that for each one-unit increase in average temperature, "LST" is expected to increase by about 6.555 units. Conversely, "Min.Temp.C" has a negative coefficient of approximately -5.155, indicating that for each one-unit increase in minimum temperature, "LST" is expected to decrease by about 5.155 units.
 
 ```{r}
 summary(model)

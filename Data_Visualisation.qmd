@@ -9,9 +9,9 @@ summer_data = read.csv("summer_data.csv")
 
 Data visualization is essential for processing and drawing conclusions on the land surface data (LST) dataset throughout the years and the summer months.
 
-This code generates box plots visually representing the Land Surface Temperature (LST) data from 2013 to 2022. Box plots are statistical plots that help in understanding the distribution of data. The box plots in this code identify patterns and LST changes over the given period.
+This code generates box plots visually representing the Land Surface Temperature data from 2013 to 2022. Box plots are statistical plots that help in understanding the distribution of data. The box plots in this code identify patterns and Land Surface Temperature changes over the given period.
 
-Upon examining the box plots, it was discovered that the Land Surface Temperature (LST) values during 2017, 2018, 2019, and 2021 were lower than the overall median value of LST. This indicates that the land surface temperature was lower during these years compared to the overall dataset. In contrast, LST values from 2013 to 2016 and 2020 to 2022 were higher than the median LST value. Therefore, it is evident that there is a distinct divergence in LST patterns throughout this time frame.
+Upon examining the box plots, it was discovered that the Land Surface Temperature values during 2017, 2018, 2019, and 2021 were lower than the overall median value of Land Surface Temperature. This indicates that the land surface temperature was lower during these years compared to the overall dataset. In contrast, Land Surface Temperature values from 2013 to 2016 and 2020 to 2022 were higher than the median Land Surface Temperature value. Therefore, it is evident that there is a distinct divergence in Land Surface Temperature patterns throughout this time frame.
 
 In addition to the previously observed temporal patterns, it is noteworthy that certain years, specifically 2015 and 2020, exhibit a notably wide range of temperatures. This stands in stark contrast to the characteristics of other years, such as 2013, 2017, and 2021, which demonstrate a conspicuously narrow temperature range.
 
@@ -48,11 +48,11 @@ ggplot(summer_data, aes(x = factor(Year), y = Lst, fill = factor(Year))) +
 
 ------------------------------------------------------------------------
 
-The Land Surface Temperature (LST) variations across summer months from 2013 to 2022 are visualized in a heatmap with corresponding LST values indicated by a color gradient.
+The Land Surface Temperature variations across summer months from 2013 to 2022 are visualized in a heatmap with corresponding Land Surface Temperature values indicated by a color gradient.
 
-The months of August and July have the lowest LST values, which can be attributed to their temporal alignment with the beginning and end of the summer season. July is the hottest month in the dataset, with the highest LST values.
+The months of August and July have the lowest Land Surface Temperature values, which can be attributed to their temporal alignment with the beginning and end of the summer season. July is the hottest month in the dataset, with the highest Land Surface Temperature values.
 
-In June 2015, the temperature was exceptionally low, with a minimum LST of 28.5 degrees Celsius. In contrast, July 2020 was the hottest month, with a temperature of 46.5 degrees Celsius, almost 1.6 times higher than the lowest temperature recorded in June 2015. This significant temperature difference highlights the dynamic nature of LST patterns.
+In June 2015, the temperature was exceptionally low, with a minimum Land Surface Temperature of 28.5 degrees Celsius. In contrast, July 2020 was the hottest month, with a temperature of 46.5 degrees Celsius, almost 1.6 times higher than the lowest temperature recorded in June 2015. This significant temperature difference highlights the dynamic nature of Land Surface Temperature patterns.
 
 ```{r,warning=FALSE,message=FALSE}
 my_color_scale = scale_fill_gradientn(colors = viridis::viridis(10), 
@@ -77,11 +77,11 @@ ggplot(summer_data, aes(x = Year, y = Month, fill = Lst)) +
 
 ------------------------------------------------------------------------
 
-This code generates violin plots that display the distribution of Land Surface Temperature (LST) across different months. These plots offer valuable insights into each month's central tendency, spread, and overall shape of the LST data distribution.
+This code generates violin plots that display the distribution of Land Surface Temperature across different months. These plots offer valuable insights into each month's central tendency, spread, and overall shape of the Land Surface Temperature data distribution.
 
-July stands out as the hottest month in the dataset. This is evident from its higher violin plot shape. Meanwhile, the violin plots for June and August show similar conditions, indicating that these two months share specific temperature characteristics. June and August have broader distributions, which suggest a wider spread of LST values. However, it is notable that August still has slightly higher temperatures than June, as evidenced by its higher upper end of the violin plot.
+July stands out as the hottest month in the dataset. This is evident from its higher violin plot shape. Meanwhile, the violin plots for June and August show similar conditions, indicating that these two months share specific temperature characteristics. June and August have broader distributions, which suggest a wider spread of Land Surface Temperature values. However, it is notable that August still has slightly higher temperatures than June, as evidenced by its higher upper end of the violin plot.
 
-Furthermore, the variation in the width of the violin plots is noticeable. While June and August exhibit broader distributions, July presents a narrower one. This suggests that LST values in July tend to cluster more closely around a specific temperature range, whereas June and August display more significant variability.
+Furthermore, the variation in the width of the violin plots is noticeable. While June and August exhibit broader distributions, July presents a narrower one. This suggests that Land Surface Temperature values in July tend to cluster more closely around a specific temperature range, whereas June and August display more significant variability.
 
 ```{r,warning=FALSE,message=FALSE}
 library(ggplot2)
